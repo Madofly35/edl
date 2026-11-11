@@ -419,7 +419,7 @@ function renderHome(){
     ${isExit() ? `<li><span><b>Propreté</b> : photographiez l'intérieur du four, du frigo, du lave-vaisselle, l'évier, les toilettes… (${p.proprete.length} photos).</span></li>` : ""}
     <li><span>Photographiez les <b>défauts</b> que vous voyez (taches, rayures, trous…).</span></li>
     <li><span>Testez le <b>détecteur de fumée</b> et les équipements.</span></li>
-    <li><span><b>Signez et envoyez</b>. ${isExit() ? "La signature officielle se fera ensuite sur Rentila." : "C'est fini !"}</span></li>
+    <li><span><b>Validez et envoyez</b>. Vous signerez ensuite l'état des lieux <b>officiel sur Rentila</b> (lien par e-mail + code SMS).</span></li>
    </ol></div>
   <div class="tip">💡 Allumez la lumière, ouvrez les volets, et tenez le téléphone <b>${p.hasRefs ? "comme sur les photos" : "à la verticale"}</b>.</div>
   <label class="f" for="nm">Votre nom et prénom</label>
@@ -666,18 +666,25 @@ function renderEquip(){
 
 /* ---------------- signature et envoi ---------------- */
 function certText(){ const p = S.pack, s = S.sess;
-  return `Je soussigné(e) ${s.tenant}, locataire de « ${p.chambre}${p.logement ? " — " + p.logement : ""} », certifie avoir réalisé moi-même les photos de cet état des lieux ${isExit() ? "de sortie" : "d'entrée"} le ${fmtDate(s.signedAt || Date.now())}, et qu'elles reflètent fidèlement l'état${isExit() ? " et la propreté" : ""} de la chambre à ${isExit() ? "ma sortie" : "mon entrée"}. Je reconnais que le détecteur de fumée et les équipements indiqués « Fonctionne » sont en bon état de marche, les problèmes constatés étant décrits ci-dessus.`; }
+  return `Je soussigné(e) ${s.tenant}, locataire de « ${p.chambre}${p.logement ? " — " + p.logement : ""} », certifie avoir réalisé moi-même les photos de cet état des lieux ${isExit() ? "de sortie" : "d'entrée"} le ${fmtDate(s.signedAt || Date.now())}, et qu'elles reflètent fidèlement l'état${isExit() ? " et la propreté" : ""} de la chambre à ${isExit() ? "ma sortie" : "mon entrée"}. Je reconnais que le détecteur de fumée et les équipements indiqués « Fonctionne » sont en bon état de marche, les problèmes constatés étant décrits ci-dessus. Ce document est préparatoire : l'état des lieux officiel sera signé électroniquement par le bailleur et moi-même sur Rentila (e-mail + code SMS).`; }
+/* e-mail et mobile du locataire : indispensables pour l'invitation à signer sur Rentila */
+const okEmail = v => /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v);
+function toE164(v){ let t = String(v||"").replace(/[\s.\-()]/g, ""); if(t.startsWith("00")) t = "+" + t.slice(2); if(/^0[1-9]\d{8}$/.test(t)) t = "+33" + t.slice(1); return /^\+\d{8,15}$/.test(t) ? t : null; }
 function renderFinish(){
   const p = S.pack, s = S.sess;
   const missS = p.refs.length - shotsDone(), missE = p.equipements.length - equipDone(), missC = isExit() ? cleanReqMissing().length : 0;
   if(missS || missE || missC){ view(`<div class="wrap"><div class="brand">Étape 4</div><h1>Presque fini</h1><div class="card"><p>Avant de signer, il reste :</p><ul>${missS?`<li>${missS} photo(s) de la chambre</li>`:""}${missC?`<li>${missC} photo(s) de propreté</li>`:""}${missE?`<li>${missE} équipement(s) à vérifier</li>`:""}</ul></div></div><div class="bar"><div class="in"><button class="btn" id="go">Compléter</button></div></div>`); $("#go").onclick = renderHub; return; }
-  view(`<div class="wrap"><div class="brand">Étape 4</div><h1>Signer et envoyer</h1>
+  view(`<div class="wrap"><div class="brand">Étape 4</div><h1>Valider et envoyer</h1>
   <div class="card"><b>Récapitulatif</b><p class="sub" style="margin:6px 0 0">${shotsDone()} photos de la chambre · ${s.details.length} photo(s) de défauts · ${p.equipements.filter(e => s.equip[e.id].ok===false).length} problème(s) d'équipement signalé(s)${isExit() ? ` · ${cleanDone()} photo(s) de propreté (${p.proprete.filter(c => (s.clean[c.id]||{}).ok === false).length} à reprendre)` : ""}</p></div>
-  ${isExit() ? `<div class="tip">Ce rapport sera repris dans <b>Rentila</b>, où vous recevrez par e-mail et SMS l'invitation à signer l'état des lieux officiel.</div>` : ""}
+  <div class="card"><b>✍️ Signature officielle sur Rentila</b><p class="sub" style="margin:6px 0 0">Votre propriétaire reprend ce rapport dans <b>Rentila</b>, le logiciel de gestion du bail. Vous recevrez un <b>e-mail de Rentila</b> avec un lien pour signer l'état des lieux officiel, confirmé par un <b>code SMS</b>. C'est cette signature qui a valeur légale.</p>
+  <label class="f" for="em">Votre e-mail</label><input type="email" id="em" autocomplete="email" inputmode="email" value="${esc(s.email||"")}" placeholder="prenom.nom@exemple.fr">
+  <label class="f" for="ph">Votre mobile (pour le code SMS)</label><input type="tel" id="ph" autocomplete="tel" inputmode="tel" value="${esc(s.phone||"")}" placeholder="06 12 34 56 78"></div>
   <label class="check card"><input type="checkbox" id="ac" ${s.accepted?"checked":""}><span>${esc(certText())}</span></label>
-  <label class="f">Signez avec le doigt</label><canvas id="sig"></canvas><button class="mini" id="clr" style="margin-top:8px">Effacer</button>
+  <label class="f">Votre visa (paraphe) avec le doigt</label><canvas id="sig"></canvas><button class="mini" id="clr" style="margin-top:8px">Effacer</button>
   <div class="err" id="er"></div></div>
-  <div class="bar"><div class="in"><button class="btn" id="go">Générer et envoyer</button></div></div>`);
+  <div class="bar"><div class="in"><button class="btn" id="go">Valider et envoyer</button></div></div>`);
+  $("#em").onchange = () => { s.email = $("#em").value.trim(); save(); };
+  $("#ph").onchange = () => { s.phone = $("#ph").value.trim(); save(); };
   const c = $("#sig"), r = c.getBoundingClientRect(), dpr = devicePixelRatio || 1; c.width = r.width*dpr; c.height = r.height*dpr;
   const x = c.getContext("2d"); x.scale(dpr,dpr); x.lineWidth = 2.6; x.lineCap = x.lineJoin = "round"; x.strokeStyle = "#0f172a";
   let drawing = false, inked = false;
@@ -689,8 +696,12 @@ function renderFinish(){
   $("#clr").onclick = () => { x.clearRect(0,0,c.width,c.height); inked = false; s.signature = null; };
   $("#ac").onchange = () => { s.accepted = $("#ac").checked; save(); };
   $("#go").onclick = async () => {
+    const em = $("#em").value.trim(), ph = toE164($("#ph").value);
+    if(!okEmail(em)) return $("#er").textContent = "Indiquez une adresse e-mail valide : Rentila y enverra le lien de signature.";
+    if(!ph) return $("#er").textContent = "Indiquez un numéro de mobile valide (ex. 06 12 34 56 78) : Rentila y enverra le code de signature.";
+    s.email = em; s.phone = ph;
     if(!$("#ac").checked) return $("#er").textContent = "Cochez la case de certification.";
-    if(!inked) return $("#er").textContent = "Signez dans le cadre.";
+    if(!inked) return $("#er").textContent = "Faites votre visa dans le cadre.";
     const w = document.createElement("canvas"); w.width = c.width; w.height = c.height; const wx = w.getContext("2d"); wx.fillStyle = "#fff"; wx.fillRect(0,0,w.width,w.height); wx.drawImage(c,0,0);
     s.signature = w.toDataURL("image/jpeg", .9); s.signedAt = Date.now(); s.accepted = true; await save();
     renderSend();
@@ -716,6 +727,11 @@ async function renderSend(){
   <a class="btn ghost" download="${pdfFile.name}" href="${URL.createObjectURL(out.pdf)}">Télécharger le PDF (${(out.pdf.size/1e6).toFixed(1)} Mo)</a><div style="height:8px"></div>
   <a class="btn ghost" download="${zipFile.name}" href="${URL.createObjectURL(out.zip)}">Télécharger le ZIP (${(out.zip.size/1e6).toFixed(1)} Mo)</a>
   ${c.email ? `<div style="height:8px"></div><a class="btn ghost" href="mailto:${esc(c.email)}?subject=${encodeURIComponent("État des lieux — " + p.chambre + " — " + s.tenant)}&body=${encodeURIComponent("Bonjour,\n\nVeuillez trouver ci-joint mon " + edlName().toLowerCase() + " (rapport PDF et photos).\n\n" + s.tenant)}">Ouvrir un e-mail</a>` : ""}</div>
+  <div class="card"><b>Et ensuite ?</b><ol class="steps" style="margin-top:8px">
+   <li><span>Votre propriétaire reprend votre état des lieux dans <b>Rentila</b> et le signe.</span></li>
+   <li><span>Vous recevez un <b>e-mail de Rentila</b> à <b>${esc(s.email||"")}</b> : ouvrez le lien et relisez.</span></li>
+   <li><span>Signez avec le <b>code SMS</b> reçu au <b>${esc(s.phone||"")}</b>. Vous pourrez ensuite télécharger l'état des lieux signé.</span></li></ol>
+   <p class="sub" style="margin:4px 0 0;font-size:14px">Pas d'e-mail sous 3 jours ? Regardez dans les indésirables, puis prévenez votre propriétaire.</p></div>
   <button class="btn ghost" id="bk">Revenir à mon état des lieux</button></div>`);
   const share = async (files, title) => {
     if(canShare(files)){ try{ await navigator.share({ files, title, text: `État des lieux — ${p.chambre} — ${s.tenant}` }); s.sentAt = Date.now(); save(); toast("Envoyé ✓"); } catch(e){ if(e.name !== "AbortError") toast("Partage impossible : utilisez « Télécharger »"); } }
@@ -808,7 +824,8 @@ function rentilaPayload(d){
     lease_id: +(p.rentila.lease_id || 0) || null,
     name: clip(`${p.logement ? p.logement + " " : ""}${p.chambre} — ${d.locataire} — ${d.type === "sortie" ? "sortie" : "entrée"} ${date}`),
     draft: 1,
-    observations: [`État des lieux réalisé par le locataire (${d.locataire}) avec l'application BP Immo le ${fmtDate(d.signature)}, certifié et signé dans l'application.`,
+    _signataire: { nom: d.locataire, email: d.locataireEmail || null, mobile: d.locataireMobile || null },
+    observations: [`Photos et constats réalisés par le locataire (${d.locataire}) avec l'application BP Immo le ${fmtDate(d.signature)} et visés par lui dans l'application. Le présent état des lieux, signé électroniquement sur Rentila par le bailleur et le locataire, fait foi.`,
                    flagged.length ? "Contrôle automatique — photos signalées : " + flagged.join(" | ") : "Contrôle automatique des photos : aucune anomalie."].join("\n"),
     data: d.type === "sortie" && d.clesRendues ? [{ data_type: "key", count: String(d.clesRendues), date, comments: "Clés rendues par le locataire" }] : [],
     rooms
@@ -828,7 +845,9 @@ async function buildOutputs(progress){
   // page 1 : synthèse
   progress("Création du rapport…");
   header(edlName() + " — réalisé par le locataire");
-  const info = [["Logement", [p.logement, p.adresse].filter(Boolean).join(" — ") || "—"],["Chambre", p.chambre || "—"],["Locataire", s.tenant],["Débuté le", fmtDate(s.startedAt)],["Signé le", fmtDate(s.signedAt)],["Référence", p.hasRefs ? `${p.refs.length} vues reprises à l'identique de l'état des lieux précédent${p.source ? " ("+p.source+")" : ""}` : "Sans photos de référence"],
+  pdf.rect(M, y-4, CW, 30, [244,234,211]); pdf.text("DOCUMENT PRÉPARATOIRE", M+8, y+8, 9, true, [138,100,32]);
+  pdf.text("L'état des lieux officiel est signé électroniquement sur Rentila par le bailleur et le locataire (e-mail + code SMS).", M+8, y+20, 8.5, false, [138,100,32]); y += 38;
+  const info = [["Logement", [p.logement, p.adresse].filter(Boolean).join(" — ") || "—"],["Chambre", p.chambre || "—"],["Locataire", s.tenant],["Contact", [s.email, s.phone].filter(Boolean).join("  ·  ") || "—"],["Débuté le", fmtDate(s.startedAt)],["Validé le", fmtDate(s.signedAt)],["Référence", p.hasRefs ? `${p.refs.length} vues reprises à l'identique de l'état des lieux précédent${p.source ? " ("+p.source+")" : ""}` : "Sans photos de référence"],
     ["Photos", `${shotsDone()} vues (${p.refs.filter(r => s.shots[r.id] && s.shots[r.id].auto).length} cadrées automatiquement) + ${s.details.length} photo(s) de défauts` + (isExit() ? ` + ${cleanDone()} photo(s) de propreté` : "")],
     ["Contrôle auto", (() => { const all = Object.values(s.shots).concat(Object.values(s.clean||{})).filter(x => x && x.check); const bad = all.filter(x => x.check.level !== "ok"); return `${all.length} photo(s) analysée(s) sur le téléphone (netteté, exposition, ressemblance avec la référence${isExit() ? ", objet attendu" : ""}) — ${bad.length ? bad.length + " signalée(s), gardée(s) par le locataire" : "aucune anomalie"}`; })()]];
   if(isExit()) info.push(["Clés rendues", s.keys || "—"]);
@@ -839,7 +858,7 @@ async function buildOutputs(progress){
     if(v.ok === false && v.comment){ for(const l of wrap(v.comment, 9, CW-20)){ ensure(12); pdf.text(l, M+12, y+9, 9, false, MUT); y += 12; } y += 2; } }
   y += 14; ensure(40); pdf.text("Remarques du locataire", M, y+12, 12.5, true); y += 24; para(s.comment || "Aucune.", 10);
   y += 14; ensure(60); pdf.text("Certification", M, y+12, 12.5, true); y += 24; para(certText(), 9.5);
-  y += 8; ensure(110); pdf.text("Signature du locataire", M, y+10, 9, true, MUT); y += 16;
+  y += 8; ensure(110); pdf.text("Visa du locataire (la signature officielle a lieu sur Rentila)", M, y+10, 9, true, MUT); y += 16;
   const sig = await jpegFor(pdf, await loadImg(s.signature), 600, .85); const sh = 90, sw = Math.min(CW*.6, sh*sig.w/sig.h); pdf.img(sig, M, y, sw, sh); y += sh + 10;
 
   // photos de la chambre : avant / après
@@ -897,7 +916,7 @@ async function buildOutputs(progress){
   for(let i=0;i<p.proprete.length;i++){ const c = p.proprete[i], v = s.clean[c.id]; if(!v || !v.blob) continue; const n = `proprete/${String(i+1).padStart(2,"0")}_${slug(c.label)}.jpg`; cleanFiles[c.id] = n; files.push({ name: n, data: await u8(v.blob) }); }
   const ck = c => c ? { niveau: c.level, messages: c.msgs, nettete: c.sharp, luminosite: c.mean, ressemblance: c.sim ?? null, contours: c.edge ?? null, objets: c.labels || null, gardeeMalgre: !!c.forced } : null;
   const photoName = (r, i) => String(i+1).padStart(2,"0") + "_" + slug(r.label) + ".jpg";
-  const data = { packId: p.id, type: p.mode, logement: p.logement, chambre: p.chambre, locataire: s.tenant, debut: new Date(s.startedAt).toISOString(), signature: new Date(s.signedAt).toISOString(),
+  const data = { packId: p.id, type: p.mode, logement: p.logement, chambre: p.chambre, locataire: s.tenant, locataireEmail: s.email || null, locataireMobile: s.phone || null, debut: new Date(s.startedAt).toISOString(), signature: new Date(s.signedAt).toISOString(),
     photos: p.refs.map((r,i) => ({ id:r.id, label:r.label, fichier: s.shots[r.id] ? "photos/" + photoName(r,i) : null, prise: s.shots[r.id] ? new Date(s.shots[r.id].ts).toISOString() : null, cadrageAuto: !!(s.shots[r.id]||{}).auto, score:(s.shots[r.id]||{}).score, controle: ck((s.shots[r.id]||{}).check) })),
     proprete: p.proprete.map(c => { const v = s.clean[c.id] || {}; return { id:c.id, label:c.label, fichier: cleanFiles[c.id] || null, propre: v.ok ?? null, commentaire: v.comment || "", controle: ck(v.check) }; }),
     clesRendues: s.keys || null,

@@ -34,11 +34,12 @@ Lit `H:\My Drive\BP<n> CH<m>\EDL <Prénom>\`, convertit (ffmpeg pour les HEIC), 
 
 ### Import dans Rentila et signature officielle
 Le ZIP du locataire contient `rentila.json` (corps `create_handover` : pièces, équipements avec état d'usure,
-propreté, clés, observations, contrôle auto).
-1. `python tools/zip_to_rentila.py <ZIP>` → `rentila_create.json` + `rentila_photos.json` ;
+propreté, clés, observations, contrôle auto). Dans l'appli, le locataire ne fait qu'un **visa** sur un document
+marqué « préparatoire » et saisit son e-mail + mobile : **seule la signature Rentila fait foi**.
+1. `python tools/zip_to_rentila.py <ZIP>` → `rentila_create.json`, `rentila_photos.json`, `rentila_signature.json` ;
 2. demander à Claude « importe l'EDL de X dans Rentila » (skill `edl-rentila`) : brouillon créé via l'API Rentila,
-   photos déposées pièce par pièce dans le formulaire Rentila ;
-3. **vous** lancez la signature dans Rentila (onglet Signature : votre signature + code SMS) — l'API Rentila
+   photos déposées pièce par pièce, e-mail/mobile du locataire vérifiés dans sa fiche Rentila (mis à jour sur accord) ;
+3. **vous** lancez la signature dans Rentila (EDL › onglet Signataires › « Démarrer la procédure de signature » : votre signature + code SMS) — l'API Rentila
    ne permet pas encore de la démarrer. Le locataire reçoit l'invitation par e-mail/SMS.
 
 
@@ -62,7 +63,7 @@ La caméra ne marche qu'en **HTTPS** → GitHub Pages (ou Netlify Drop).
 ## 3. Envoyer au locataire
 `https://<votre-compte>.github.io/edl/?room=bp3-ch2-k7f4`
 
-Le locataire : nom → photos guidées (photo fantôme + pastille à ramener dans le cercle, déclenchement automatique quand c'est cadré et stable) → défauts → détecteur/équipements → signature → envoi PDF + ZIP par WhatsApp / mail.
+Le locataire : nom → photos guidées (photo fantôme + pastille à ramener dans le cercle, déclenchement automatique quand c'est cadré et stable) → défauts → détecteur/équipements → visa + e-mail/mobile → envoi PDF + ZIP par WhatsApp / mail.
 S'il ferme l'appli, tout est conservé sur son téléphone : il reprend où il en était.
 
 ## 4. Boucle automatique pour le locataire suivant

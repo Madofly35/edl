@@ -7,6 +7,8 @@ Prépare l'import dans Rentila d'un état des lieux reçu du locataire (ZIP de l
 - décompresse le ZIP dans un dossier voisin (EDL_xxx_photos/) ;
 - écrit rentila_create.json : corps exact pour create_handover (MCP / API Rentila),
   sans les champs internes (_photos) ;
+- écrit rentila_signature.json : nom, e-mail et mobile (E.164) du locataire,
+  à vérifier dans sa fiche Rentila avant de lancer la signature ;
 - écrit rentila_photos.json : pour chaque pièce, la liste des photos à déposer
   (chemins absolus, par lots de ≤ 9 Mo pour l'outil d'upload du navigateur).
 
@@ -40,6 +42,7 @@ def main():
     if not rj.exists(): sys.exit("rentila.json absent : ZIP produit par une ancienne version de l'appli ?")
     payload = json.loads(rj.read_text(encoding="utf-8"))
     if a.lease: payload["lease_id"] = a.lease
+    signataire = payload.pop("_signataire", None) or {}
 
     photos = []
     for room in payload["rooms"]:
@@ -54,6 +57,7 @@ def main():
     if not payload.get("lease_id"): payload.pop("lease_id", None)
 
     (out / "rentila_create.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    (out / "rentila_signature.json").write_text(json.dumps(signataire, ensure_ascii=False, indent=2), encoding="utf-8")
     (out / "rentila_photos.json").write_text(json.dumps(photos, ensure_ascii=False, indent=2), encoding="utf-8")
     pdf = next(out.glob("*.pdf"), None)
     print(f"Dossier         : {out}")
@@ -61,6 +65,9 @@ def main():
     print(f"Nom             : {payload['name']}")
     print(f"Pièces          : " + ", ".join(f"{p['room']} ({p['count']} photos)" for p in photos))
     print(f"Rapport PDF     : {pdf}")
+    print(f"Signataire      : {signataire.get('nom') or '?'}  e-mail : {signataire.get('email') or 'ABSENT'}  mobile : {signataire.get('mobile') or 'ABSENT'}")
+    if not (signataire.get("email") and signataire.get("mobile")):
+        print("  ⚠ Rentila exige e-mail + mobile du locataire pour la signature : à compléter dans la fiche locataire.")
     print(f"→ {out / 'rentila_create.json'}\n→ {out / 'rentila_photos.json'}")
 
 
