@@ -7,7 +7,7 @@ Arborescence attendue (Drive BP monté par Google Drive pour ordinateur) :
     H:\\My Drive\\BP<n> CH<m>\\EDL <Prénom>\\*.HEIC|*.jpg
 
 Exemples :
-    python tools/drive_to_pack.py "BP2 CH4"                      # dernier dossier EDL, mode entrée
+    python tools/drive_to_pack.py "BP2 CH4" --publie             # dernier dossier EDL, mode entrée, mis en ligne
     python tools/drive_to_pack.py "BP2 CH4" --mode sortie --lease 1796387
     python tools/drive_to_pack.py "BP2 CH4" --edl "EDL Aubin" --max 15
     python tools/drive_to_pack.py "D:\\photos\\EDL x" --logement BP9 --chambre CH1
@@ -74,6 +74,7 @@ def main():
     ap.add_argument("--max", type=int, default=30, help="nombre max de photos (réparties uniformément)")
     ap.add_argument("--whatsapp", default=""); ap.add_argument("--email", default=""); ap.add_argument("--contact", default="")
     ap.add_argument("--out", default=str(Path(__file__).resolve().parent.parent / "rooms"))
+    ap.add_argument("--publie", action="store_true", help="publie le pack sur le site (git add + commit + push)")
     a = ap.parse_args()
 
     room_dir = Path(a.room) if Path(a.room).is_absolute() else DRIVE / a.room
@@ -105,6 +106,13 @@ def main():
     size = dest.stat().st_size / 1e6
     print(f"\n✓ {dest}  ({len(refs)} photos, {size:.1f} Mo, source : {edl})")
     print("  Renommez les vues dans …/?admin si besoin, ou directement dans le .json (champ label).")
+    repo = Path(__file__).resolve().parent.parent
+    if a.publie:
+        git = lambda *c: subprocess.run(["git", "-C", str(repo), *c], check=True)
+        git("add", str(dest)); git("commit", "-q", "-m", f"Ajoute le pack de référence {room_dir.name} ({edl.name})"); git("push", "-q")
+        print("  Publié : le lien marche d'ici 1 à 2 minutes (le temps que GitHub Pages se mette à jour).")
+    else:
+        print("  ⚠ PAS ENCORE EN LIGNE : relancez avec --publie, ou faites git add / commit / push.")
     print(f"  Lien locataire : https://madofly35.github.io/edl/?room={pid}" + ("&sortie" if a.mode == "sortie" else ""))
 
 
