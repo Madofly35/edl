@@ -20,6 +20,7 @@ LOT_MAX = 9_000_000  # octets par lot d'upload
 
 
 def main():
+    for st in (sys.stdout, sys.stderr): st.reconfigure(encoding="utf-8", errors="replace")  # console Windows (cp1252)
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("zip")
     ap.add_argument("--lease", type=int, help="ID du bail Rentila (si absent du pack)")

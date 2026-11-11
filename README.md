@@ -26,8 +26,8 @@ référence « à l'entrée » du locataire suivant.
 
 ### Photos de référence depuis le Drive BP
 ```
-python tools/drive_to_pack.py "BP2 CH4"                       # dernier dossier « EDL … », HEIC compris
-python tools/drive_to_pack.py "BP2 CH4" --mode sortie --lease 1796387 --max 15
+python tools/drive_to_pack.py "BP2 CH4" --publie              # dernier dossier « EDL … », HEIC compris, mis en ligne
+python tools/drive_to_pack.py "BP2 CH4" --mode sortie --lease 1796387 --max 15 --publie
 ```
 Lit `H:\My Drive\BP<n> CH<m>\EDL <Prénom>\`, convertit (ffmpeg pour les HEIC), réduit à 1200 px et écrit
 `rooms/<id>.json`. Les vues s'appellent « Vue 1… » : renommez-les dans le .json si besoin.

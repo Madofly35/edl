@@ -63,6 +63,7 @@ def pick_edl_dir(room_dir: Path, name: str | None) -> Path:
 
 
 def main():
+    for st in (sys.stdout, sys.stderr): st.reconfigure(encoding="utf-8", errors="replace")  # console Windows (cp1252)
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("room", help='nom du dossier sur le Drive BP (ex. "BP2 CH4") ou chemin complet')
     ap.add_argument("--edl", help='sous-dossier à utiliser (défaut : le plus récent « EDL … »)')
