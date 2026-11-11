@@ -3,42 +3,61 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#0f172a">
+<meta name="theme-color" content="#faf6ec">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>État des lieux — chambre</title>
+<meta name="apple-mobile-web-app-title" content="EDL BP Immo">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+<title>État des lieux — BP Immo</title>
 <style>
-:root{--ac:#0e7c66;--ac2:#0b5f4f;--ok:#16a34a;--warn:#f59e0b;--bad:#dc2626;--ink:#0f172a;--mut:#64748b;--bg:#f5f7f6;--card:#fff;--line:#e2e8f0}
+/* Charte BP IMMO : noir profond + or, fond ivoire, titres en capitales romaines (cf. logo) */
+:root{--ac:#14110d;--ac2:#000;--gold:#c9a052;--gold2:#8a6420;--gold-bg:#f4ead3;--ok:#2f7d4f;--warn:#d4952b;--bad:#b3261e;--ink:#14110d;--mut:#6f675a;--bg:#faf6ec;--card:#fff;--line:#e8dfcc;--serif:"Cormorant Garamond","Times New Roman",Georgia,serif}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 button{font:inherit;cursor:pointer}
 .wrap{max-width:560px;margin:0 auto;padding:20px 18px calc(110px + env(safe-area-inset-bottom))}
-h1{font-size:26px;line-height:1.15;margin:6px 0 4px}
-h2{font-size:20px;margin:0 0 6px}
-.brand{font-weight:700;letter-spacing:.08em;font-size:12px;color:var(--ac);text-transform:uppercase}
+h1{font-family:var(--serif);font-weight:700;font-size:32px;line-height:1.05;margin:6px 0 6px;letter-spacing:.01em}
+h2{font-family:var(--serif);font-weight:700;font-size:23px;margin:0 0 6px}
+.brand{font-weight:700;letter-spacing:.12em;font-size:11.5px;color:var(--gold2);text-transform:uppercase}
+.logo{display:flex;align-items:center;gap:10px;margin:-4px 0 14px}
+.logo img{height:38px;width:auto}
+.logo span{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.14em}
+.logo i{flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.hero{text-align:center;margin:4px 0 10px}.hero img{height:118px}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;background:var(--gold-bg);color:var(--gold2);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.ai{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;border-radius:10px;padding:8px 10px;margin-top:6px}
+.ai.ok{background:#eaf4ec;color:#1f5c38}.ai.warn{background:#fdf1dc;color:#7a4d00}.ai.bad{background:#fbe7e5;color:var(--bad)}
+.verdict{position:fixed;inset:0;z-index:20;background:rgba(20,17,13,.92);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:24px;gap:14px}
+.verdict img{max-height:46vh;max-width:100%;object-fit:contain;border-radius:10px;align-self:center}
+.verdict h2{color:#fff;text-align:center}.verdict p{text-align:center;margin:0;color:#e9dfc8}
+.verdict .btn{max-width:420px;align-self:center}
 .sub{color:var(--mut);margin:0 0 16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0}
 .steps{counter-reset:s;list-style:none;padding:0;margin:0}
 .steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;padding:7px 0}
-.steps li:before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;background:#e6f3ef;color:var(--ac);font-weight:700;display:grid;place-items:center;font-size:14px}
+.steps li:before{content:counter(s);flex:0 0 28px;height:28px;border-radius:50%;background:var(--gold-bg);color:var(--gold2);font-weight:700;display:grid;place-items:center;font-size:14px}
 label.f{display:block;font-weight:600;margin:14px 0 6px}
 input[type=text],textarea,select{width:100%;font:inherit;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
 textarea{min-height:84px;resize:vertical}
 input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ac)}
-.btn{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:14px;padding:16px;font-weight:700;font-size:17px;background:var(--ac);color:#fff}
+.btn{text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:14px;padding:16px;font-weight:700;font-size:17px;background:var(--ac);color:#f6ead0;box-shadow:inset 0 0 0 1px rgba(201,160,82,.55)}
 .btn:active{background:var(--ac2)}
-.btn.sec{background:#e6f3ef;color:var(--ac2)}
-.btn.ghost{background:transparent;color:var(--ac2);border:1.5px solid var(--line)}
+.btn.sec{background:var(--gold-bg);color:var(--ink);box-shadow:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
 .btn:disabled{opacity:.4}
 .bar{position:fixed;left:0;right:0;bottom:0;padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 30%)}
 .bar .in{max-width:560px;margin:0 auto;display:flex;gap:10px}
-.tip{background:#fff8e6;border:1px solid #fde7b0;border-radius:12px;padding:12px 14px;font-size:14px;color:#7a5300}
+.tip{background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--mut)}
 .hubitem{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff;margin:10px 0;width:100%;text-align:left;color:inherit}
-.hubitem .ic{width:46px;height:46px;border-radius:12px;background:#e6f3ef;display:grid;place-items:center;font-size:22px;flex:0 0 46px}
-.hubitem .t{font-weight:700}.hubitem .d{color:var(--mut);font-size:14px}
+.hubitem .ic{width:46px;height:46px;border-radius:12px;background:var(--gold-bg);display:grid;place-items:center;font-size:22px;flex:0 0 46px}
+.hubitem .t{font-weight:700;font-size:16.5px}.hubitem .d{color:var(--mut);font-size:14px}
 .hubitem .st{margin-left:auto;font-weight:700;font-size:14px;color:var(--mut);white-space:nowrap}
 .hubitem.done .st{color:var(--ok)}
-.prog{height:8px;background:#e2e8f0;border-radius:8px;overflow:hidden;margin:10px 0 2px}
-.prog i{display:block;height:100%;background:var(--ac);border-radius:8px;transition:width .3s}
+.prog{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin:10px 0 2px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));border-radius:8px;transition:width .3s}
 .pairs{display:grid;gap:12px}
 .pair{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
 .pair .lb{font-weight:700;margin:0 0 8px;display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -46,7 +65,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ac)}
 .pair img,.ph{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:9px;background:#e2e8f0;display:block}
 .ph{display:grid;place-items:center;color:var(--mut);font-size:13px}
 .cap{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
-.mini{border:0;background:#e6f3ef;color:var(--ac2);font-weight:700;border-radius:10px;padding:7px 11px;font-size:14px}
+.mini{border:0;background:var(--gold-bg);color:var(--ink);font-weight:700;border-radius:10px;padding:7px 11px;font-size:14px}
 .mini.red{background:#fde8e8;color:var(--bad)}
 .eq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0}
 .eq .q{font-weight:700}.eq .h{color:var(--mut);font-size:14px;margin:2px 0 10px}
@@ -61,7 +80,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ac)}
 .det select{padding:9px 10px;font-size:15px;margin-bottom:6px}
 .check{display:flex;gap:12px;align-items:flex-start;font-size:15px}
 .check input{width:24px;height:24px;flex:0 0 24px;accent-color:var(--ac);margin-top:2px}
-#sig{width:100%;height:170px;border:1.5px dashed #94a3b8;border-radius:12px;background:#fff;touch-action:none;display:block}
+#sig{width:100%;height:170px;border:1.5px dashed var(--gold);border-radius:12px;background:#fff;touch-action:none;display:block}
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;z-index:99;font-size:15px;max-width:90vw;text-align:center}
 .center{text-align:center}
 .big{font-size:56px;line-height:1}
@@ -83,7 +102,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ac)}
 .ring{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;pointer-events:none}
 .ring circle{fill:none;stroke-width:4}
 .dot{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 4px rgba(245,158,11,.35);transition:transform .12s linear,background .2s;pointer-events:none}
-.dot.ok{background:var(--ok);box-shadow:0 0 0 5px rgba(22,163,74,.4)}
+.dot.ok{background:#4ade80;box-shadow:0 0 0 5px rgba(22,163,74,.4)}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
 .flash.go{animation:fl .35s ease-out}
 @keyframes fl{0%{opacity:.9}100%{opacity:0}}
@@ -141,6 +160,23 @@ const DEFAULT_EQUIP = [
   ["Serrure et clé de la chambre","La clé ferme et ouvre la porte",false],
   ["Mobilier (lit, bureau, chaise, rangement)","Stable et complet",false]
 ];
+/* Propreté (état des lieux de SORTIE) : [libellé, conseil, obligatoire, mots-clés attendus pour l'IA]
+   Les mots-clés sont cherchés dans les classes ImageNet renvoyées par MobileNet. */
+const DEFAULT_CLEAN = [
+  ["Four — intérieur","Porte ouverte, grille visible, sans graisse ni résidus",true,"oven|stove|microwave|rotisserie|dutch oven|fire screen|safe|printer|dishwasher"],
+  ["Micro-ondes — intérieur","Porte ouverte, plateau visible",false,"microwave|oven"],
+  ["Plaques de cuisson","Vue de dessus, plaques froides",true,"stove|oven|frying pan|wok|spatula|caldron"],
+  ["Hotte et filtre","Filtre propre, sans graisse",false,"hood|stove|oven|cabinet|lamp"],
+  ["Réfrigérateur — intérieur","Vidé, clayettes visibles",true,"refrigerator|icebox|freezer|cabinet|china cabinet"],
+  ["Lave-vaisselle — intérieur","Paniers sortis, filtre visible",true,"dishwasher|dish washer|dishrag|plate rack|washer"],
+  ["Évier et robinetterie","Sans calcaire ni vaisselle",true,"washbasin|sink|basin|faucet|tub|soap dispenser|plate rack"],
+  ["Toilettes","Abattant levé, cuvette visible",true,"toilet|bathtub|washbasin|tub"],
+  ["Lavabo","Sans calcaire ni cheveux",true,"washbasin|sink|basin|faucet|medicine chest|soap dispenser"],
+  ["Douche / baignoire","Joints et paroi visibles",true,"shower|bathtub|tub|curtain|washbasin"],
+  ["Sol de la chambre","Vue large, aspiré et lavé",true,""],
+  ["Placard / armoire vidé","Portes ouvertes, étagères vides",true,"wardrobe|closet|cabinet|chest|bookcase|sliding door|file"],
+  ["Poubelles","Vidées et propres",false,"ashcan|trash|bucket|pail|barrel|ash can"]
+];
 
 /* ---------------- utilitaires ---------------- */
 const $ = s => document.querySelector(s);
@@ -171,7 +207,7 @@ const idb = (() => {
 
 /* ---------------- état ---------------- */
 const S = { pack:null, sess:null, refImgs:{}, matchers:{} };
-async function save(){ try{ await idb.set("sess:" + S.pack.id, S.sess); }catch(e){ console.warn(e); } }
+async function save(){ try{ await idb.set(S.sessKey || ("sess:" + S.pack.id), S.sess); }catch(e){ console.warn(e); } }
 
 function normalizePack(p){
   p = p || {};
@@ -179,9 +215,104 @@ function normalizePack(p){
     .map((r,i) => ({ id: r.id || ("p" + String(i+1).padStart(2,"0")), label: r.label || ("Photo " + (i+1)), hint: r.hint || "", src: r.src || null }));
   const eq = (p.equipements && p.equipements.length ? p.equipements : DEFAULT_EQUIP.map(([label,hint,required]) => ({label,hint,required})))
     .map((e,i) => typeof e === "string" ? { id:"e"+i, label:e.replace(/^\*\s*/,""), hint:"", required:/^\*/.test(e) } : { id: e.id || ("e"+i), label:e.label, hint:e.hint||"", required:!!e.required });
+  const q = new URLSearchParams(location.search);
+  const mode = q.has("sortie") ? "sortie" : q.has("entree") ? "entree" : (p.mode === "sortie" ? "sortie" : "entree");
+  const cleanAll = (p.proprete && p.proprete.length ? p.proprete : DEFAULT_CLEAN.map(([label,hint,required,ai]) => ({label,hint,required,ai})))
+    .map((c,i) => typeof c === "string" ? { id:"c"+String(i+1).padStart(2,"0"), label:c.replace(/^\*\s*/,""), hint:"", required:/^\*/.test(c), ai:"" }
+                                         : { id: c.id || ("c"+String(i+1).padStart(2,"0")), label:c.label, hint:c.hint||"", required:!!c.required, ai:c.ai||"", src:c.src||null });
+  const clean = mode === "sortie" ? cleanAll : [];
   return { id: p.id || "sans-reference", logement: p.logement || "", chambre: p.chambre || "", adresse: p.adresse || "",
-           proprietaire: p.proprietaire || "", contact: p.contact || {}, refs, equipements: eq, hasRefs: refs.some(r => r.src), source: p.source || "" };
+           proprietaire: p.proprietaire || "BP IMMO", contact: p.contact || {}, refs, equipements: eq, hasRefs: refs.some(r => r.src), source: p.source || "",
+           mode, proprete: clean, propreteRef: cleanAll, rentila: p.rentila || {} };
 }
+const isExit = () => S.pack.mode === "sortie";
+const edlName = () => isExit() ? "État des lieux de sortie" : "État des lieux d'entrée";
+const logoBar = () => `<div class="logo"><img src="assets/mark.png" alt=""><span>BP IMMO</span><i></i></div>`;
+
+/* =====================================================================
+   INTELLIGENCE EMBARQUÉE (100 % sur le téléphone)
+   1. Qualité : netteté (variance du laplacien), exposition, comparée à la référence.
+   2. Cohérence de vue : corrélation de contours avec la photo de référence (moteur
+      d'alignement) + similarité sémantique MobileNet (embeddings, cosinus).
+   3. Objet attendu (propreté) : classification MobileNet (ImageNet) vs mots-clés.
+   MobileNet est chargé à la demande ; s'il ne charge pas (réseau), seules les
+   vérifications 1 et 2-contours s'appliquent. Rien n'est bloquant : le locataire
+   peut toujours « Garder quand même », et le verdict est consigné dans le rapport.
+   ===================================================================== */
+function loadScript(src){ return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.async = true; s.onload = res; s.onerror = () => rej(new Error("script " + src)); document.head.appendChild(s); }); }
+const AI = {
+  p: null, model: null,
+  load(){
+    if(this.p) return this.p;
+    this.p = (async () => {
+      if(!window.tf) await loadScript("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js");
+      if(!window.mobilenet) await loadScript("https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js");
+      this.model = await window.mobilenet.load({ version: 2, alpha: 1.0 });
+      return this.model;
+    })().catch(e => { console.warn("IA indisponible", e); this.model = null; return null; });
+    return this.p;
+  },
+  async ready(ms = 4000){ return Promise.race([this.load(), sleep(ms).then(() => null)]); },
+  async classify(img){ const m = await this.ready(); if(!m) return null; try{ return await m.classify(img, 10); }catch(e){ console.warn(e); return null; } },
+  async embed(img){ const m = await this.ready(); if(!m) return null;
+    try{ const t = m.infer(img, true); const v = await t.data(); t.dispose(); let n = 0; for(const x of v) n += x*x; n = Math.sqrt(n) || 1; return Float32Array.from(v, x => x/n); }catch(e){ console.warn(e); return null; } },
+  cos(a, b){ if(!a || !b) return null; let s = 0; for(let i=0;i<a.length;i++) s += a[i]*b[i]; return s; }
+};
+/** netteté / exposition sur une version 256 px de l'image */
+function imgStats(img){
+  const c = imgToCanvas(img, 256), w = c.width, h = c.height, g = grayFrom(c.getContext("2d"), w, h);
+  let m = 0, dark = 0, bright = 0; for(const v of g){ m += v; if(v < 25) dark++; if(v > 245) bright++; } m /= g.length;
+  let s = 0, s2 = 0, n = 0;
+  for(let y=1;y<h-1;y++) for(let x=1;x<w-1;x++){ const i = y*w+x; const l = 4*g[i] - g[i-1] - g[i+1] - g[i-w] - g[i+w]; s += l; s2 += l*l; n++; }
+  return { mean: m, sharp: s2/n - (s/n)**2, dark: dark/g.length, bright: bright/g.length };
+}
+const refStatsCache = {}, refEmbCache = {};
+/**
+ * Analyse une photo prise. ref = { key, img } (photo de référence), expect = "mots|clés" (propreté)
+ * Renvoie { level:"ok"|"warn"|"bad", msgs:[…], sharp, mean, sim, emb, labels }
+ */
+async function analyzeShot(blob, { ref = null, expect = "", edgeScore = null, auto = false } = {}){
+  const img = await blobToImg(blob), st = imgStats(img), msgs = [], out = { sharp: Math.round(st.sharp), mean: Math.round(st.mean) };
+  let level = "ok";
+  const warn = (m, l = "warn") => { msgs.push(m); if(l === "bad" || level === "ok") level = l; };
+  // 1. qualité
+  let rs = null; if(ref && ref.img){ rs = refStatsCache[ref.key] || (refStatsCache[ref.key] = imgStats(ref.img)); }
+  const blurLimit = rs ? Math.min(90, rs.sharp * .30) : 35;
+  if(st.mean < 45 || st.dark > .55) warn("Photo trop sombre : allumez la lumière ou ouvrez les volets.");
+  else if(st.mean > 228 || st.bright > .45) warn("Photo surexposée (contre-jour ?) : changez d'angle.");
+  if(st.sharp < blurLimit) warn("Photo floue : tenez le téléphone immobile et refaites-la.", "bad");
+  // 2. cohérence avec la référence
+  if(ref && ref.img){
+    if(edgeScore != null) out.edge = Math.round(edgeScore*100)/100;
+    const [e1, e2] = await Promise.all([ refEmbCache[ref.key] || AI.embed(ref.img).then(e => (refEmbCache[ref.key] = e)), AI.embed(img) ]);
+    const sim = AI.cos(e1, e2); if(sim != null) out.sim = Math.round(sim*100)/100;
+    if(!auto){
+      const edgeBad = edgeScore != null && edgeScore < .15;
+      if(sim != null ? (sim < .45 || (sim < .55 && edgeBad)) : edgeBad) warn("Cette photo ne ressemble pas à la vue de référence : vérifiez que vous êtes au bon endroit.", "bad");
+    }
+  }
+  // 3. objet attendu
+  if(expect){
+    const preds = await AI.classify(img);
+    if(preds){ out.labels = preds.slice(0,5).map(p => p.className.split(",")[0] + " " + Math.round(p.probability*100) + "%");
+      const re = new RegExp(expect, "i"), hit = preds.some(p => re.test(p.className));
+      out.match = hit; if(!hit) warn("L'appli ne reconnaît pas clairement l'élément demandé. Vérifiez le cadrage (élément entier, bien éclairé).");
+    }
+  }
+  out.ai = !!AI.model; out.level = level; out.msgs = msgs; return out;
+}
+/** Affiche le verdict ; résout true = garder, false = refaire. Ne s'affiche que s'il y a un problème. */
+function showVerdict(blob, res){
+  if(!res || res.level === "ok") return Promise.resolve(true);
+  return new Promise(resolve => {
+    const d = document.createElement("div"); d.className = "verdict";
+    d.innerHTML = `<h2>${res.level === "bad" ? "⚠️ Photo à vérifier" : "🤔 Petit doute"}</h2><img src="${blobUrl(blob)}"><p>${res.msgs.map(esc).join("<br>")}</p>
+      <button class="btn" style="background:#c9a052;color:#14110d">📷 Refaire la photo</button><button class="btn ghost" style="color:#fff;border-color:rgba(255,255,255,.3)">Garder quand même</button>`;
+    const [b1, b2] = d.querySelectorAll("button"); b1.onclick = () => { d.remove(); resolve(false); }; b2.onclick = () => { d.remove(); res.forced = true; resolve(true); };
+    document.body.appendChild(d);
+  });
+}
+const aiNote = c => !c ? "" : c.level === "ok" ? "Contrôle auto ✓" + (c.sim != null ? ` (ressemblance ${Math.round(c.sim*100)} %)` : "") : (c.forced ? "Gardée malgré : " : "") + c.msgs.join(" ");
 
 /* =====================================================================
    MOTEUR D'ALIGNEMENT
@@ -257,12 +388,16 @@ async function boot(){
 }
 async function startWith(raw){
   S.pack = normalizePack(raw);
-  S.sess = (await idb.get("sess:" + S.pack.id).catch(()=>null)) || { v:1, packId:S.pack.id, tenant:"", startedAt:Date.now(), shots:{}, details:[], equip:{}, comment:"", signature:null, accepted:false };
+  const key = "sess:" + S.pack.id + (isExit() ? ":sortie" : "");
+  S.sessKey = key;
+  S.sess = (await idb.get(key).catch(()=>null)) || { v:2, packId:S.pack.id, mode:S.pack.mode, tenant:"", startedAt:Date.now(), shots:{}, details:[], equip:{}, clean:{}, keys:"", comment:"", signature:null, accepted:false };
+  S.sess.clean = S.sess.clean || {};
+  setTimeout(() => AI.load(), 1500);   // préchargement discret du modèle
   renderHome();
 }
 
 function renderNoPack(err){
-  view(`<div class="wrap"><div class="brand">État des lieux</div><h1>Lien incomplet</h1>
+  view(`<div class="wrap">${logoBar()}<div class="brand">État des lieux</div><h1>Lien incomplet</h1>
   <p class="sub">${err ? esc(err) + ". " : ""}Le lien reçu de votre propriétaire doit ouvrir directement votre chambre. Vérifiez que vous avez bien copié tout le lien, ou demandez-le à nouveau.</p>
   <div class="card"><h2>Pas de photos de référence ?</h2><p class="sub">Vous pouvez quand même faire votre état des lieux, en suivant une liste de photos type.</p>
   <label class="f">Logement</label><input type="text" id="lg" placeholder="ex. 18 rue Herriot">
@@ -272,17 +407,19 @@ function renderNoPack(err){
 }
 
 function renderHome(){
-  const p = S.pack, s = S.sess, started = shotsDone() > 0 || s.details.length || equipDone();
+  const p = S.pack, s = S.sess, started = shotsDone() > 0 || s.details.length || equipDone() || cleanDone();
   view(`<div class="wrap">
-  <div class="brand">${esc(p.proprietaire || "Votre propriétaire")} · État des lieux d'entrée</div>
-  <h1>${esc(p.chambre || "Votre chambre")}</h1>
-  <p class="sub">${esc([p.logement, p.adresse].filter(Boolean).join(" — "))}</p>
-  <div class="card"><b>Comment ça marche (≈ 15 min)</b>
+  <div class="hero"><img src="assets/logo.png" alt="BP IMMO"></div>
+  <div class="center"><span class="pill">${edlName()}</span></div>
+  <h1 class="center" style="margin-top:10px">${esc(p.chambre || "Votre chambre")}</h1>
+  <p class="sub center">${esc([p.logement, p.adresse].filter(Boolean).join(" — "))}</p>
+  <div class="card"><b>Comment ça marche (≈ ${isExit() ? 25 : 15} min)</b>
    <ol class="steps">
-    <li><span>Reprenez les <b>${p.refs.length} photos</b> de la chambre : l'appli vous guide et déclenche toute seule quand c'est bien cadré.</span></li>
+    <li><span>Reprenez les <b>${p.refs.length} photos</b> de la chambre : l'appli vous guide, déclenche toute seule quand c'est bien cadré et <b>vérifie chaque photo</b> (netteté, bon endroit).</span></li>
+    ${isExit() ? `<li><span><b>Propreté</b> : photographiez l'intérieur du four, du frigo, du lave-vaisselle, l'évier, les toilettes… (${p.proprete.length} photos).</span></li>` : ""}
     <li><span>Photographiez les <b>défauts</b> que vous voyez (taches, rayures, trous…).</span></li>
     <li><span>Testez le <b>détecteur de fumée</b> et les équipements.</span></li>
-    <li><span><b>Signez et envoyez</b>. C'est fini !</span></li>
+    <li><span><b>Signez et envoyez</b>. ${isExit() ? "La signature officielle se fera ensuite sur Rentila." : "C'est fini !"}</span></li>
    </ol></div>
   <div class="tip">💡 Allumez la lumière, ouvrez les volets, et tenez le téléphone <b>${p.hasRefs ? "comme sur les photos" : "à la verticale"}</b>.</div>
   <label class="f" for="nm">Votre nom et prénom</label>
@@ -291,21 +428,26 @@ function renderHome(){
   <div class="bar"><div class="in"><button class="btn" id="go">${started ? "Reprendre" : "Commencer"}</button></div></div>`);
   $("#go").onclick = async () => { const n = $("#nm").value.trim(); if(n.length < 3){ $("#er").textContent = "Indiquez votre nom pour continuer."; return; } s.tenant = n; await save(); started ? renderHub() : startCapture(0); };
 }
+const cleanDone = () => (S.pack.proprete || []).filter(c => S.sess.clean && S.sess.clean[c.id] && S.sess.clean[c.id].blob).length;
+const cleanReqMissing = () => S.pack.proprete.filter(c => c.required && !(S.sess.clean[c.id] && S.sess.clean[c.id].blob));
 
 function renderHub(){
   const p = S.pack, s = S.sess, nS = shotsDone(), nE = equipDone();
-  const allShots = nS === p.refs.length, allEq = nE === p.equipements.length;
-  const total = p.refs.length + p.equipements.length + 1, done = nS + nE + (s.detailsSeen ? 1 : 0);
-  view(`<div class="wrap"><div class="brand">${esc(p.chambre)} · ${esc(s.tenant)}</div><h1>Votre état des lieux</h1>
-  <div class="prog"><i style="width:${Math.round(done/total*100)}%"></i></div><p class="sub">${Math.round(done/total*100)} % terminé</p>
+  const allShots = nS === p.refs.length, allEq = nE === p.equipements.length, nC = cleanDone(), allClean = !isExit() || cleanReqMissing().length === 0;
+  const total = p.refs.length + p.equipements.length + p.proprete.length + 1, done = nS + nE + nC + (s.detailsSeen ? 1 : 0);
+  const warnN = Object.values(s.shots).concat(Object.values(s.clean)).filter(x => x && x.check && x.check.level !== "ok").length;
+  view(`<div class="wrap">${logoBar()}<div class="brand">${esc(p.chambre)} · ${esc(s.tenant)}</div><h1>${edlName()}</h1>
+  <div class="prog"><i style="width:${Math.round(done/total*100)}%"></i></div><p class="sub">${Math.round(done/total*100)} % terminé${warnN ? ` · <span style="color:var(--warn)">${warnN} photo(s) signalée(s) par le contrôle auto</span>` : ""}</p>
   <button class="hubitem ${allShots?"done":""}" id="h1"><div class="ic">📸</div><div><div class="t">Photos de la chambre</div><div class="d">Guidées, déclenchement automatique</div></div><div class="st">${allShots?"✓":nS+"/"+p.refs.length}</div></button>
+  ${isExit() ? `<button class="hubitem ${allClean?"done":""}" id="h5"><div class="ic">🧽</div><div><div class="t">Propreté</div><div class="d">Four, frigo, lave-vaisselle, évier, toilettes…</div></div><div class="st">${allClean && nC === p.proprete.length ? "✓" : nC+"/"+p.proprete.length}</div></button>` : ""}
   <button class="hubitem ${s.detailsSeen?"done":""}" id="h2"><div class="ic">🔍</div><div><div class="t">Défauts et détails</div><div class="d">Photos de près + commentaires</div></div><div class="st">${s.details.length ? s.details.length + " photo" + (s.details.length>1?"s":"") : (s.detailsSeen?"✓":"—")}</div></button>
   <button class="hubitem ${allEq?"done":""}" id="h3"><div class="ic">🔥</div><div><div class="t">Détecteur et équipements</div><div class="d">Vérifiez que tout fonctionne</div></div><div class="st">${allEq?"✓":nE+"/"+p.equipements.length}</div></button>
   <button class="hubitem" id="h4"><div class="ic">✍️</div><div><div class="t">Signer et envoyer</div><div class="d">Rapport PDF + photos</div></div><div class="st">›</div></button>
-  </div><div class="bar"><div class="in"><button class="btn" id="go">${!allShots?"Continuer les photos":!s.detailsSeen?"Continuer : défauts":!allEq?"Continuer : équipements":"Signer et envoyer"}</button></div></div>`);
+  </div><div class="bar"><div class="in"><button class="btn" id="go">${!allShots?"Continuer les photos":!allClean?"Continuer : propreté":!s.detailsSeen?"Continuer : défauts":!allEq?"Continuer : équipements":"Signer et envoyer"}</button></div></div>`);
   $("#h1").onclick = () => nS ? renderReview() : startCapture(0);
+  if(isExit()) $("#h5").onclick = renderClean;
   $("#h2").onclick = renderDetails; $("#h3").onclick = renderEquip; $("#h4").onclick = renderFinish;
-  $("#go").onclick = () => { if(!allShots){ const i = p.refs.findIndex(r => !s.shots[r.id]); startCapture(i); } else if(!s.detailsSeen) renderDetails(); else if(!allEq) renderEquip(); else renderFinish(); };
+  $("#go").onclick = () => { if(!allShots){ const i = p.refs.findIndex(r => !s.shots[r.id]); startCapture(i); } else if(!allClean) renderClean(); else if(!s.detailsSeen) renderDetails(); else if(!allEq) renderEquip(); else renderFinish(); };
 }
 
 function renderReview(){
@@ -313,7 +455,8 @@ function renderReview(){
   view(`<div class="wrap"><div class="brand">Étape 1</div><h1>Vérifiez vos photos</h1><p class="sub">${p.hasRefs ? "À gauche l'ancienne photo, à droite la vôtre. " : ""}Touchez « Refaire » si une photo est floue ou mal cadrée.</p>
   <div class="pairs">${p.refs.map((r,i) => { const sh = s.shots[r.id]; return `<div class="pair"><div class="lb"><span>${i+1}. ${esc(r.label)}</span><button class="mini" data-redo="${i}">${sh?"Refaire":"Prendre"}</button></div>
    <div class="im" ${p.hasRefs?"":'style="grid-template-columns:1fr"'}>${p.hasRefs ? `<div>${r.src?`<img src="${esc(r.src)}">`:`<div class="ph">—</div>`}<div class="cap">Avant</div></div>` : ""}
-   <div>${sh?`<img src="${blobUrl(sh.blob)}">`:`<div class="ph">À prendre</div>`}<div class="cap">Votre photo${sh&&sh.auto?" · cadrage auto ✓":""}</div></div></div></div>`; }).join("")}</div></div>
+   <div>${sh?`<img src="${blobUrl(sh.blob)}">`:`<div class="ph">À prendre</div>`}<div class="cap">Votre photo${sh&&sh.auto?" · cadrage auto ✓":""}</div></div></div>
+   ${sh && sh.check ? `<div class="ai ${sh.check.level}">${sh.check.level === "ok" ? "✓" : "⚠️"} <span>${esc(aiNote(sh.check))}</span></div>` : ""}</div>`; }).join("")}</div></div>
   <div class="bar"><div class="in"><button class="btn" id="go">${shotsDone()===p.refs.length?"Valider les photos":"Continuer les photos"}</button></div></div>`);
   app.querySelectorAll("[data-redo]").forEach(b => b.onclick = () => startCapture(+b.dataset.redo, true));
   $("#go").onclick = () => { const i = p.refs.findIndex(r => !s.shots[r.id]); i >= 0 ? startCapture(i) : renderHub(); };
@@ -372,7 +515,12 @@ async function startCapture(idx, single=false){
     c.getContext("2d").drawImage(vd, (vw-cw)/2, (vh-ch)/2, cw, ch, 0, 0, c.width, c.height);
     const blob = await canvasToBlob(c, .88);
     $("#fl").classList.remove("go"); void $("#fl").offsetWidth; $("#fl").classList.add("go"); vibrate(auto ? [40,40,40] : 50);
-    s.shots[ref.id] = { blob, ts: Date.now(), auto: !!auto, score: score != null ? Math.round(score*100)/100 : null };
+    // contrôle de cohérence : la caméra reste ouverte pendant l'analyse
+    $("#hn").textContent = "Vérification de la photo…"; $("#hn").className = "hint";
+    const check = await analyzeShot(blob, { ref: refImg ? { key: p.id + ref.id, img: refImg } : null, edgeScore: score, auto: !!auto });
+    if(cam !== CAM) return;
+    if(!(await showVerdict(blob, check))){ cam.busy = false; cam.hold = 0; cam.t0 = performance.now(); cam.prev = null; if(auto && cam.restart) cam.restart(); return; }   // refaire : on reste sur la même vue
+    s.shots[ref.id] = { blob, ts: Date.now(), auto: !!auto, score: score != null ? Math.round(score*100)/100 : null, check };
     await save();
     $("#ok").classList.add("show"); await sleep(650);
     if(cam !== CAM) return;
@@ -422,6 +570,7 @@ async function startCapture(idx, single=false){
     }
     cam.timer = setTimeout(tick, 70);
   };
+  cam.restart = () => { clearTimeout(cam.timer); tick(); };
   tick();
 }
 
@@ -435,8 +584,47 @@ function cameraFallback(idx, single, err){
   <div style="height:10px"></div><button class="btn ghost" id="rt" style="color:#fff">Réessayer la caméra guidée</button></div></div>`;
   $("#cx").onclick = () => single ? renderReview() : renderHub();
   $("#rt").onclick = () => startCapture(idx, single);
-  $("#fi").onchange = async ev => { const f = ev.target.files[0]; if(!f) return; s.shots[ref.id] = { blob: await fileToJpeg(f), ts: Date.now(), auto:false, score:null }; await save(); toast("Photo enregistrée ✓");
+  $("#fi").onchange = async ev => { const f = ev.target.files[0]; if(!f) return; toast("Vérification…", 1200); const blob = await fileToJpeg(f);
+    let refImg = null; try{ if(ref.src) refImg = S.refImgs[ref.id] || (S.refImgs[ref.id] = await loadImg(ref.src)); }catch(e){}
+    const check = await analyzeShot(blob, { ref: refImg ? { key: p.id + ref.id, img: refImg } : null });
+    if(!(await showVerdict(blob, check))) return;
+    s.shots[ref.id] = { blob, ts: Date.now(), auto:false, score:null, check }; await save(); toast("Photo enregistrée ✓");
     if(single) return renderReview(); const next = p.refs.findIndex(r => !s.shots[r.id]); next >= 0 ? cameraFallback(next, false, err) : renderReview(); };
+}
+
+/* ---------------- propreté (sortie) ---------------- */
+function renderClean(){
+  const p = S.pack, s = S.sess;
+  view(`<div class="wrap">${logoBar()}<div class="brand">Sortie · Propreté</div><h1>Propreté du logement</h1>
+  <p class="sub">Une photo par élément, <b>porte ouverte</b> et bien éclairée. L'appli vérifie que la photo est nette et montre bien l'élément demandé.</p>
+  ${p.proprete.map((c,i) => { const v = s.clean[c.id] || {}; return `<div class="eq" data-id="${c.id}">
+    <div class="q">${i+1}. ${esc(c.label)}${c.required?'<span class="req">OBLIGATOIRE</span>':""}</div>${c.hint?`<div class="h">${esc(c.hint)}</div>`:'<div style="height:8px"></div>'}
+    <div class="pair" style="border:0;padding:0"><div class="im" ${c.src?"":'style="grid-template-columns:1fr 1fr"'}>
+      ${c.src ? `<div><img src="${esc(c.src)}"><div class="cap">À l'entrée</div></div>` : ""}
+      <div>${v.blob ? `<img src="${blobUrl(v.blob)}">` : `<label class="ph" style="cursor:pointer">📷 Prendre<input type="file" accept="image/*" capture="environment" data-shot="${c.id}" hidden></label>`}<div class="cap">${v.blob ? "Votre photo · " + fmtDate(v.ts) : "Votre photo"}</div></div>
+      ${!c.src && v.blob ? `<div style="display:grid;align-content:center;gap:8px"><label class="mini" style="text-align:center">Refaire<input type="file" accept="image/*" capture="environment" data-shot="${c.id}" hidden></label></div>` : ""}</div></div>
+    ${c.src && v.blob ? `<label class="mini" style="display:inline-block;margin-top:8px">Refaire la photo<input type="file" accept="image/*" capture="environment" data-shot="${c.id}" hidden></label>` : ""}
+    ${v.check ? `<div class="ai ${v.check.level}">${v.check.level === "ok" ? "✓" : "⚠️"} <span>${esc(aiNote(v.check))}</span></div>` : ""}
+    ${v.blob ? `<div class="seg" style="margin-top:10px"><button class="y ${v.ok===true?"on":""}" data-v="1">✓ Propre</button><button class="n ${v.ok===false?"on":""}" data-v="0">✗ À reprendre</button></div>
+      ${v.ok===false?`<textarea style="margin-top:10px" data-c placeholder="Précisez (ex. traces de graisse dans le four)">${esc(v.comment||"")}</textarea>`:""}` : ""}
+  </div>`; }).join("")}
+  <label class="f">Clés rendues (nombre)</label><input type="text" id="ky" inputmode="numeric" value="${esc(s.keys||"")}" placeholder="ex. 2">
+  <div class="err" id="er"></div></div><div class="bar"><div class="in"><button class="btn" id="go">Continuer</button></div></div>`);
+  app.querySelectorAll("[data-shot]").forEach(inp => inp.onchange = async ev => {
+    const f = ev.target.files[0]; ev.target.value = ""; if(!f) return; const c = p.proprete.find(x => x.id === inp.dataset.shot);
+    toast("Vérification de la photo…", 1500);
+    const blob = await fileToJpeg(f); let refImg = null; try{ if(c.src) refImg = await loadImg(c.src); }catch(e){}
+    const check = await analyzeShot(blob, { expect: c.ai, ref: refImg ? { key: p.id + c.id, img: refImg } : null });
+    if(!(await showVerdict(blob, check))) return;
+    const y = window.scrollY; s.clean[c.id] = { ...(s.clean[c.id]||{}), blob, ts: Date.now(), check }; await save(); renderClean(); window.scrollTo(0, y);
+  });
+  app.querySelectorAll(".eq").forEach(el => { const id = el.dataset.id;
+    el.querySelectorAll("[data-v]").forEach(b => b.onclick = async () => { const y = window.scrollY; s.clean[id].ok = b.dataset.v === "1"; await save(); renderClean(); window.scrollTo(0, y); });
+    const t = el.querySelector("[data-c]"); if(t) t.oninput = () => { s.clean[id].comment = t.value; save(); }; });
+  $("#ky").oninput = () => { s.keys = $("#ky").value.trim(); save(); };
+  $("#go").onclick = () => { const miss = cleanReqMissing(); if(miss.length){ $("#er").textContent = "Photos obligatoires manquantes : " + miss.map(m => m.label).join(", "); return; }
+    const noState = p.proprete.filter(c => s.clean[c.id] && s.clean[c.id].blob && s.clean[c.id].ok === undefined); if(noState.length){ $("#er").textContent = "Indiquez « Propre » ou « À reprendre » pour : " + noState.map(m => m.label).join(", "); return; }
+    s.detailsSeen ? renderHub() : renderDetails(); };
 }
 
 /* ---------------- défauts ---------------- */
@@ -452,7 +640,9 @@ function renderDetails(){
   <div style="height:8px"></div>
   <label class="f">Remarques générales (facultatif)</label><textarea id="gc" placeholder="ex. légère odeur de tabac, mur fraîchement repeint…">${esc(s.comment)}</textarea>
   </div><div class="bar"><div class="in"><button class="btn" id="go">${s.details.length ? "Terminé" : "Aucun défaut, continuer"}</button></div></div>`);
-  $("#fi").onchange = async ev => { const f = ev.target.files[0]; if(!f) return; toast("Enregistrement…", 900); s.details.push({ id: uid(), blob: await fileToJpeg(f), comment:"", where:"", ts: Date.now() }); await save(); renderDetails(); setTimeout(() => { const t = app.querySelectorAll(".det textarea"); t.length && t[t.length-1].focus(); }, 100); };
+  $("#fi").onchange = async ev => { const f = ev.target.files[0]; ev.target.value = ""; if(!f) return; toast("Vérification…", 900); const blob = await fileToJpeg(f);
+    const check = await analyzeShot(blob, {}); if(!(await showVerdict(blob, check))) return;
+    s.details.push({ id: uid(), blob, comment:"", where:"", ts: Date.now(), check }); await save(); renderDetails(); setTimeout(() => { const t = app.querySelectorAll(".det textarea"); t.length && t[t.length-1].focus(); }, 100); };
   app.querySelectorAll(".det").forEach(el => { const d = s.details.find(x => x.id === el.dataset.id);
     el.querySelectorAll("[data-k]").forEach(inp => inp.oninput = inp.onchange = () => { d[inp.dataset.k] = inp.value; save(); }); });
   app.querySelectorAll("[data-del]").forEach(b => b.onclick = async () => { if(!confirm("Supprimer cette photo ?")) return; s.details = s.details.filter(x => x.id !== b.dataset.del); await save(); renderDetails(); });
@@ -476,13 +666,14 @@ function renderEquip(){
 
 /* ---------------- signature et envoi ---------------- */
 function certText(){ const p = S.pack, s = S.sess;
-  return `Je soussigné(e) ${s.tenant}, locataire de « ${p.chambre}${p.logement ? " — " + p.logement : ""} », certifie avoir réalisé moi-même les photos de cet état des lieux le ${fmtDate(s.signedAt || Date.now())}, et qu'elles reflètent fidèlement l'état de la chambre à mon entrée. Je reconnais que le détecteur de fumée et les équipements indiqués « Fonctionne » sont en bon état de marche, les problèmes constatés étant décrits ci-dessus.`; }
+  return `Je soussigné(e) ${s.tenant}, locataire de « ${p.chambre}${p.logement ? " — " + p.logement : ""} », certifie avoir réalisé moi-même les photos de cet état des lieux ${isExit() ? "de sortie" : "d'entrée"} le ${fmtDate(s.signedAt || Date.now())}, et qu'elles reflètent fidèlement l'état${isExit() ? " et la propreté" : ""} de la chambre à ${isExit() ? "ma sortie" : "mon entrée"}. Je reconnais que le détecteur de fumée et les équipements indiqués « Fonctionne » sont en bon état de marche, les problèmes constatés étant décrits ci-dessus.`; }
 function renderFinish(){
   const p = S.pack, s = S.sess;
-  const missS = p.refs.length - shotsDone(), missE = p.equipements.length - equipDone();
-  if(missS || missE){ view(`<div class="wrap"><div class="brand">Étape 4</div><h1>Presque fini</h1><div class="card"><p>Avant de signer, il reste :</p><ul>${missS?`<li>${missS} photo(s) de la chambre</li>`:""}${missE?`<li>${missE} équipement(s) à vérifier</li>`:""}</ul></div></div><div class="bar"><div class="in"><button class="btn" id="go">Compléter</button></div></div>`); $("#go").onclick = renderHub; return; }
+  const missS = p.refs.length - shotsDone(), missE = p.equipements.length - equipDone(), missC = isExit() ? cleanReqMissing().length : 0;
+  if(missS || missE || missC){ view(`<div class="wrap"><div class="brand">Étape 4</div><h1>Presque fini</h1><div class="card"><p>Avant de signer, il reste :</p><ul>${missS?`<li>${missS} photo(s) de la chambre</li>`:""}${missC?`<li>${missC} photo(s) de propreté</li>`:""}${missE?`<li>${missE} équipement(s) à vérifier</li>`:""}</ul></div></div><div class="bar"><div class="in"><button class="btn" id="go">Compléter</button></div></div>`); $("#go").onclick = renderHub; return; }
   view(`<div class="wrap"><div class="brand">Étape 4</div><h1>Signer et envoyer</h1>
-  <div class="card"><b>Récapitulatif</b><p class="sub" style="margin:6px 0 0">${shotsDone()} photos de la chambre · ${s.details.length} photo(s) de défauts · ${p.equipements.filter(e => s.equip[e.id].ok===false).length} problème(s) d'équipement signalé(s)</p></div>
+  <div class="card"><b>Récapitulatif</b><p class="sub" style="margin:6px 0 0">${shotsDone()} photos de la chambre · ${s.details.length} photo(s) de défauts · ${p.equipements.filter(e => s.equip[e.id].ok===false).length} problème(s) d'équipement signalé(s)${isExit() ? ` · ${cleanDone()} photo(s) de propreté (${p.proprete.filter(c => (s.clean[c.id]||{}).ok === false).length} à reprendre)` : ""}</p></div>
+  ${isExit() ? `<div class="tip">Ce rapport sera repris dans <b>Rentila</b>, où vous recevrez par e-mail et SMS l'invitation à signer l'état des lieux officiel.</div>` : ""}
   <label class="check card"><input type="checkbox" id="ac" ${s.accepted?"checked":""}><span>${esc(certText())}</span></label>
   <label class="f">Signez avec le doigt</label><canvas id="sig"></canvas><button class="mini" id="clr" style="margin-top:8px">Effacer</button>
   <div class="err" id="er"></div></div>
@@ -524,7 +715,7 @@ async function renderSend(){
   <div class="card"><b>Ça ne marche pas ?</b><p class="sub" style="margin:6px 0 10px">Téléchargez les fichiers puis joignez-les à un message.</p>
   <a class="btn ghost" download="${pdfFile.name}" href="${URL.createObjectURL(out.pdf)}">Télécharger le PDF (${(out.pdf.size/1e6).toFixed(1)} Mo)</a><div style="height:8px"></div>
   <a class="btn ghost" download="${zipFile.name}" href="${URL.createObjectURL(out.zip)}">Télécharger le ZIP (${(out.zip.size/1e6).toFixed(1)} Mo)</a>
-  ${c.email ? `<div style="height:8px"></div><a class="btn ghost" href="mailto:${esc(c.email)}?subject=${encodeURIComponent("État des lieux — " + p.chambre + " — " + s.tenant)}&body=${encodeURIComponent("Bonjour,\n\nVeuillez trouver ci-joint mon état des lieux d'entrée (rapport PDF et photos).\n\n" + s.tenant)}">Ouvrir un e-mail</a>` : ""}</div>
+  ${c.email ? `<div style="height:8px"></div><a class="btn ghost" href="mailto:${esc(c.email)}?subject=${encodeURIComponent("État des lieux — " + p.chambre + " — " + s.tenant)}&body=${encodeURIComponent("Bonjour,\n\nVeuillez trouver ci-joint mon " + edlName().toLowerCase() + " (rapport PDF et photos).\n\n" + s.tenant)}">Ouvrir un e-mail</a>` : ""}</div>
   <button class="btn ghost" id="bk">Revenir à mon état des lieux</button></div>`);
   const share = async (files, title) => {
     if(canShare(files)){ try{ await navigator.share({ files, title, text: `État des lieux — ${p.chambre} — ${s.tenant}` }); s.sentAt = Date.now(); save(); toast("Envoyé ✓"); } catch(e){ if(e.name !== "AbortError") toast("Partage impossible : utilisez « Télécharger »"); } }
@@ -540,7 +731,7 @@ window.renderSend = renderSend;
    GÉNÉRATION DES FICHIERS (PDF + ZIP), 100 % sur le téléphone
    ===================================================================== */
 const CP1252 = {"€":128,"‚":130,"„":132,"…":133,"‘":145,"’":146,"“":147,"”":148,"•":149,"–":150,"—":151,"œ":156,"Œ":140,"Ÿ":159,"™":153};
-function pdfStr(str){ let o = ""; for(const ch of String(str).normalize("NFC")){ let c = ch.codePointAt(0); if(c > 255 || (c >= 128 && c < 160)) c = CP1252[ch] || 63;
+function pdfStr(str){ let o = ""; for(const ch of String(str).replace(/✓/g, "OK").replace(/[⚠️]/g, "").normalize("NFC")){ let c = ch.codePointAt(0); if(c > 255 || (c >= 128 && c < 160)) c = CP1252[ch] || 63;
   if(c === 40 || c === 41 || c === 92) o += "\\" + ch; else if(c < 32 || c > 126) o += "\\" + c.toString(8).padStart(3,"0"); else o += ch; } return o; }
 function charW(ch){ if(" iljtfI.,;:!|'()[]".includes(ch)) return .28; if("mwMW".includes(ch)) return .85; if(ch >= "A" && ch <= "Z") return .68; return .53; }
 function textW(str, size){ let w = 0; for(const ch of String(str)) w += charW(ch); return w*size; }
@@ -588,20 +779,59 @@ function makeZip(files){
 const u8 = async b => new Uint8Array(await b.arrayBuffer());
 async function jpegFor(pdf, imgOrBlob, max=1000, q=.72){ const img = imgOrBlob instanceof Blob ? await blobToImg(imgOrBlob) : imgOrBlob; const c = imgToCanvas(img, max); return pdf.jpeg(await u8(await canvasToBlob(c, q)), c.width, c.height); }
 
+/* =====================================================================
+   EXPORT RENTILA
+   rentila.json = corps prêt pour create_handover (API/MCP Rentila), en brouillon.
+   Photos : chaque pièce liste ses fichiers du ZIP à joindre (l'API ne prend pas
+   les photos) ; la signature officielle (bailleur + locataire, code SMS) se lance
+   ensuite depuis Rentila. Voir tools/ et le README.
+   wear_state : 1 neuf · 2 bon · 3 usagé · 4 mauvais · 5 hors service ; operation : 0 OK · 1 HS
+   ===================================================================== */
+function rentilaPayload(d){
+  const p = S.pack, date = d.signature.slice(0,10), clip = (t, n=255) => String(t||"").slice(0, n);
+  const defautsTxt = d.defauts.map((x,i) => `Défaut ${i+1}${x.ou ? " (" + x.ou + ")" : ""} : ${x.commentaire || "voir photo"}`).join("\n");
+  const rooms = [{
+    name: p.chambre || "Chambre",
+    note: [d.remarques, defautsTxt].filter(Boolean).join("\n\n") || "Conforme aux photos.",
+    furniture: d.equipements.map((e,i) => ({ item: clip(e.label), element: 0, order_id: i, operation: e.ok === false ? 1 : 0, wear_state: e.ok === false ? 4 : e.ok ? 2 : 0, comments: clip(e.commentaire) })),
+    _photos: d.photos.filter(x => x.fichier).map(x => x.fichier).concat(d.defauts.map(x => x.fichier))
+  }];
+  if(d.type === "sortie" && d.proprete.some(c => c.fichier)) rooms.push({
+    name: "Propreté",
+    note: d.proprete.filter(c => c.propre === false).map(c => `À reprendre — ${c.label}${c.commentaire ? " : " + c.commentaire : ""}`).join("\n") || "Logement rendu propre.",
+    furniture: d.proprete.filter(c => c.fichier).map((c,i) => ({ item: clip(c.label), element: 1, order_id: i, operation: 0, wear_state: c.propre === false ? 4 : 2, comments: clip(c.propre === false ? ("À reprendre. " + c.commentaire) : "Propre") })),
+    _photos: d.proprete.filter(c => c.fichier).map(c => c.fichier)
+  });
+  const flagged = d.photos.concat(d.proprete).filter(x => x.controle && x.controle.niveau !== "ok").map(x => `${x.label} : ${x.controle.messages.join(" ")}`);
+  return {
+    handover_type: d.type === "sortie" ? "exit" : "enter",
+    lease_id: +(p.rentila.lease_id || 0) || null,
+    name: clip(`${p.logement ? p.logement + " " : ""}${p.chambre} — ${d.locataire} — ${d.type === "sortie" ? "sortie" : "entrée"} ${date}`),
+    draft: 1,
+    observations: [`État des lieux réalisé par le locataire (${d.locataire}) avec l'application BP Immo le ${fmtDate(d.signature)}, certifié et signé dans l'application.`,
+                   flagged.length ? "Contrôle automatique — photos signalées : " + flagged.join(" | ") : "Contrôle automatique des photos : aucune anomalie."].join("\n"),
+    data: d.type === "sortie" && d.clesRendues ? [{ data_type: "key", count: String(d.clesRendues), date, comments: "Clés rendues par le locataire" }] : [],
+    rooms
+  };
+}
+
 async function buildOutputs(progress){
   const p = S.pack, s = S.sess, pdf = new MiniPDF(), M = 40, W = pdf.W, CW = W - 2*M;
   const base = "EDL_" + slug(p.id) + "_" + slug(s.tenant) + "_" + new Date(s.signedAt||Date.now()).toISOString().slice(0,10);
-  const ACC = [14,124,102], MUT = [100,116,139], RED = [220,38,38], GRN = [22,163,74];
-  let y = 0;
-  const header = (title) => { pdf.page(); pdf.rect(0,0,W,6,ACC); pdf.text(title, M, 38, 15, true); pdf.text(`${p.chambre}${p.logement?" — "+p.logement:""}  ·  ${s.tenant}`, M, 54, 9, false, MUT); y = 74; };
+  const ACC = [201,160,82], MUT = [111,103,90], RED = [179,38,30], GRN = [47,125,79], ORA = [180,110,10];
+  let y = 0, logo = null;
+  try{ logo = await jpegFor(pdf, await loadImg("assets/logo-pdf.jpg"), 400, .9); }catch(e){}
+  const header = (title) => { pdf.page(); pdf.rect(0,0,W,6,ACC); if(logo) pdf.img(logo, W - M - 46*logo.w/logo.h, 16, 46*logo.w/logo.h, 46); pdf.text(title, M, 38, 15, true); pdf.text(`${p.chambre}${p.logement?" — "+p.logement:""}  ·  ${s.tenant}`, M, 54, 9, false, MUT); y = 74; };
   const ensure = h => { if(y + h > pdf.H - 50) header("État des lieux (suite)"); };
   const para = (str, size=10, bold=false, rgb) => { for(const l of wrap(str, size, CW)){ ensure(size*1.45); pdf.text(l, M, y + size, size, bold, rgb); y += size*1.45; } };
 
   // page 1 : synthèse
   progress("Création du rapport…");
-  header("État des lieux d'entrée — réalisé par le locataire");
+  header(edlName() + " — réalisé par le locataire");
   const info = [["Logement", [p.logement, p.adresse].filter(Boolean).join(" — ") || "—"],["Chambre", p.chambre || "—"],["Locataire", s.tenant],["Débuté le", fmtDate(s.startedAt)],["Signé le", fmtDate(s.signedAt)],["Référence", p.hasRefs ? `${p.refs.length} vues reprises à l'identique de l'état des lieux précédent${p.source ? " ("+p.source+")" : ""}` : "Sans photos de référence"],
-    ["Photos", `${shotsDone()} vues (${p.refs.filter(r => s.shots[r.id] && s.shots[r.id].auto).length} cadrées automatiquement) + ${s.details.length} photo(s) de défauts`]];
+    ["Photos", `${shotsDone()} vues (${p.refs.filter(r => s.shots[r.id] && s.shots[r.id].auto).length} cadrées automatiquement) + ${s.details.length} photo(s) de défauts` + (isExit() ? ` + ${cleanDone()} photo(s) de propreté` : "")],
+    ["Contrôle auto", (() => { const all = Object.values(s.shots).concat(Object.values(s.clean||{})).filter(x => x && x.check); const bad = all.filter(x => x.check.level !== "ok"); return `${all.length} photo(s) analysée(s) sur le téléphone (netteté, exposition, ressemblance avec la référence${isExit() ? ", objet attendu" : ""}) — ${bad.length ? bad.length + " signalée(s), gardée(s) par le locataire" : "aucune anomalie"}`; })()]];
+  if(isExit()) info.push(["Clés rendues", s.keys || "—"]);
   for(const [k,v] of info){ pdf.text(k, M, y+10, 9.5, true, MUT); const ls = wrap(v, 10, CW-110); ls.forEach((l,i) => pdf.text(l, M+110, y+10+i*14, 10)); y += Math.max(1, ls.length)*14 + 3; }
   y += 10; pdf.text("Équipements", M, y+12, 12.5, true); y += 24;
   for(const e of p.equipements){ const v = s.equip[e.id] || {}; ensure(18); pdf.rect(M, y, CW, .6, [226,232,240]); y += 5;
@@ -622,10 +852,26 @@ async function buildOutputs(progress){
     const ar = (nimg || oimg) ? (nimg||oimg).h/(nimg||oimg).w : 4/3; const ih = Math.min(300, colW*ar), iw = ih/ar;
     ensure(ih + 40); pdf.text(`${i+1}. ${r.label}`, M, y+11, 11, true); y += 18;
     if(p.hasRefs){ if(oimg) pdf.img(oimg, M, y, iw, ih); if(nimg) pdf.img(nimg, M + colW + 14, y, iw, ih);
-      pdf.text("Précédent état des lieux", M, y+ih+11, 8, false, MUT); pdf.text(shot ? `Entrée — ${fmtDate(shot.ts)}${shot.auto?" — cadrage auto":""}` : "Non prise", M+colW+14, y+ih+11, 8, false, MUT); }
-    else { if(nimg) pdf.img(nimg, M, y, iw, ih); pdf.text(shot ? `Entrée — ${fmtDate(shot.ts)}` : "Non prise", M, y+ih+11, 8, false, MUT); }
+      pdf.text("Précédent état des lieux", M, y+ih+11, 8, false, MUT); pdf.text(shot ? `${isExit()?"Sortie":"Entrée"} — ${fmtDate(shot.ts)}${shot.auto?" — cadrage auto":""}` : "Non prise", M+colW+14, y+ih+11, 8, false, MUT); }
+    else { if(nimg) pdf.img(nimg, M, y, iw, ih); pdf.text(shot ? `${isExit()?"Sortie":"Entrée"} — ${fmtDate(shot.ts)}` : "Non prise", M, y+ih+11, 8, false, MUT); }
     y += ih + 24;
+    if(shot && shot.check){ const n = aiNote(shot.check); const ls = wrap(n, 8, CW); ls.forEach((l,k) => pdf.text(l, M, y - 9 + k*10, 8, false, shot.check.level === "ok" ? GRN : ORA)); y += ls.length*10; }
   }
+  // propreté (sortie)
+  if(isExit() && cleanDone()){ header("Propreté — état des lieux de sortie");
+    const cw = (CW - 14)/2;
+    for(let i=0;i<p.proprete.length;i++){ const c = p.proprete[i], v = s.clean[c.id]; if(!v || !v.blob) continue; progress(`Propreté ${i+1}/${p.proprete.length}…`);
+      const im = await jpegFor(pdf, v.blob, 900); let oi = null; if(c.src){ try{ oi = await jpegFor(pdf, await loadImg(c.src), 900); }catch(e){} }
+      const ih = Math.min(230, cw*im.h/im.w), iw = ih*im.w/im.h; ensure(ih + 60);
+      pdf.text(`${i+1}. ${c.label}`, M, y+11, 11, true); pdf.text(v.ok === false ? "À REPRENDRE" : v.ok ? "Propre" : "—", M + CW - 80, y+11, 10, true, v.ok === false ? RED : GRN); y += 18;
+      if(oi){ const oh = Math.min(230, cw*oi.h/oi.w); pdf.img(oi, M, y, oh*oi.w/oi.h, oh); pdf.img(im, M + cw + 14, y, iw, ih); pdf.text("Entrée", M, y+Math.max(ih,oh)+11, 8, false, MUT); pdf.text("Sortie — " + fmtDate(v.ts), M+cw+14, y+Math.max(ih,oh)+11, 8, false, MUT); y += Math.max(ih,oh) + 16; }
+      else { pdf.img(im, M, y, iw, ih); let ty = y + 10; const tx = M + iw + 14, tw = CW - iw - 14;
+        for(const l of wrap(fmtDate(v.ts), 8, tw)){ pdf.text(l, tx, ty, 8, false, MUT); ty += 11; }
+        if(v.comment) for(const l of wrap(v.comment, 10, tw)){ pdf.text(l, tx, ty+4, 10); ty += 14; }
+        if(v.check) for(const l of wrap(aiNote(v.check), 8, tw)){ pdf.text(l, tx, ty+8, 8, false, v.check.level === "ok" ? GRN : ORA); ty += 10; }
+        y += Math.max(ih, ty - y) + 6; }
+      if(oi){ if(v.comment) para(v.comment, 10); if(v.check) para(aiNote(v.check), 8, false, v.check.level === "ok" ? GRN : ORA); }
+      y += 12; } }
   // défauts
   if(s.details.length){ header("Défauts et détails signalés");
     for(let i=0;i<s.details.length;i++){ const d = s.details[i]; progress(`Défauts ${i+1}/${s.details.length}…`); const im = await jpegFor(pdf, d.blob, 900);
@@ -647,13 +893,23 @@ async function buildOutputs(progress){
     const small = await canvasToBlob(imgToCanvas(await blobToImg(sh2.blob), 1200), .8);
     nextRefs.push({ id: r.id, label: r.label, hint: r.hint, src: await blobToDataURL(small) }); }
   for(let i=0;i<s.details.length;i++){ const d = s.details[i]; files.push({ name: `defauts/${String(i+1).padStart(2,"0")}_${slug(d.where||"detail")}.jpg`, data: await u8(d.blob) }); }
-  const data = { packId: p.id, logement: p.logement, chambre: p.chambre, locataire: s.tenant, debut: new Date(s.startedAt).toISOString(), signature: new Date(s.signedAt).toISOString(),
-    photos: p.refs.map(r => ({ id:r.id, label:r.label, prise: s.shots[r.id] ? new Date(s.shots[r.id].ts).toISOString() : null, cadrageAuto: !!(s.shots[r.id]||{}).auto, score:(s.shots[r.id]||{}).score })),
-    defauts: s.details.map(d => ({ ou:d.where, commentaire:d.comment, date:new Date(d.ts).toISOString() })),
+  const cleanFiles = {};
+  for(let i=0;i<p.proprete.length;i++){ const c = p.proprete[i], v = s.clean[c.id]; if(!v || !v.blob) continue; const n = `proprete/${String(i+1).padStart(2,"0")}_${slug(c.label)}.jpg`; cleanFiles[c.id] = n; files.push({ name: n, data: await u8(v.blob) }); }
+  const ck = c => c ? { niveau: c.level, messages: c.msgs, nettete: c.sharp, luminosite: c.mean, ressemblance: c.sim ?? null, contours: c.edge ?? null, objets: c.labels || null, gardeeMalgre: !!c.forced } : null;
+  const photoName = (r, i) => String(i+1).padStart(2,"0") + "_" + slug(r.label) + ".jpg";
+  const data = { packId: p.id, type: p.mode, logement: p.logement, chambre: p.chambre, locataire: s.tenant, debut: new Date(s.startedAt).toISOString(), signature: new Date(s.signedAt).toISOString(),
+    photos: p.refs.map((r,i) => ({ id:r.id, label:r.label, fichier: s.shots[r.id] ? "photos/" + photoName(r,i) : null, prise: s.shots[r.id] ? new Date(s.shots[r.id].ts).toISOString() : null, cadrageAuto: !!(s.shots[r.id]||{}).auto, score:(s.shots[r.id]||{}).score, controle: ck((s.shots[r.id]||{}).check) })),
+    proprete: p.proprete.map(c => { const v = s.clean[c.id] || {}; return { id:c.id, label:c.label, fichier: cleanFiles[c.id] || null, propre: v.ok ?? null, commentaire: v.comment || "", controle: ck(v.check) }; }),
+    clesRendues: s.keys || null,
+    defauts: s.details.map((d,i) => ({ ou:d.where, commentaire:d.comment, fichier:`defauts/${String(i+1).padStart(2,"0")}_${slug(d.where||"detail")}.jpg`, date:new Date(d.ts).toISOString(), controle: ck(d.check) })),
     equipements: p.equipements.map(e => ({ label:e.label, ok:(s.equip[e.id]||{}).ok, commentaire:(s.equip[e.id]||{}).comment || "" })), remarques: s.comment, userAgent: navigator.userAgent };
   files.push({ name: "donnees.json", data: new TextEncoder().encode(JSON.stringify(data, null, 2)) });
-  const nextPack = { id: p.id, logement: p.logement, chambre: p.chambre, adresse: p.adresse, proprietaire: p.proprietaire, contact: p.contact, source: `EDL ${s.tenant} du ${new Date(s.signedAt).toLocaleDateString("fr-FR")}`,
-    refs: nextRefs, equipements: p.equipements.map(e => ({ label:e.label, hint:e.hint, required:e.required })) };
+  files.push({ name: "rentila.json", data: new TextEncoder().encode(JSON.stringify(rentilaPayload(data), null, 2)) });
+  const nextClean = [];
+  for(const c of p.propreteRef){ const v = s.clean[c.id]; nextClean.push({ id:c.id, label:c.label, hint:c.hint, required:c.required, ai:c.ai, src: v && v.blob ? await blobToDataURL(await canvasToBlob(imgToCanvas(await blobToImg(v.blob), 900), .78)) : (c.src || null) }); }
+  const nextPack = { id: p.id, mode: "entree", logement: p.logement, chambre: p.chambre, adresse: p.adresse, proprietaire: p.proprietaire, contact: p.contact, rentila: { property_id: p.rentila.property_id || null },
+    source: `EDL ${isExit() ? "sortie" : "entrée"} ${s.tenant} du ${new Date(s.signedAt).toLocaleDateString("fr-FR")}`,
+    refs: nextRefs, equipements: p.equipements.map(e => ({ label:e.label, hint:e.hint, required:e.required })), ...(nextClean.length ? { proprete: nextClean } : {}) };
   files.push({ name: `reference_prochain_locataire/${p.id}.json`, data: new TextEncoder().encode(JSON.stringify(nextPack)) });
   return { pdf: pdfBlob, zip: makeZip(files), base };
 }
@@ -663,9 +919,12 @@ async function buildOutputs(progress){
    ===================================================================== */
 async function renderAdmin(){
   const A = (await idb.get("admin:draft").catch(()=>null)) || { id:"", logement:"", chambre:"", adresse:"", proprietaire:"BP IMMO", email:"", whatsapp:"", nom:"", photos:[], equip: DEFAULT_EQUIP.map(([l,h,r]) => (r?"* ":"") + l + (h ? " | " + h : "")).join("\n") };
+  A.mode = A.mode || "entree"; A.lease = A.lease || ""; A.property = A.property || "";
+  if(A.clean == null) A.clean = DEFAULT_CLEAN.map(([l,h,r,ai]) => (r?"* ":"") + l + " | " + h + " | " + ai).join("\n");
   const saveA = () => idb.set("admin:draft", A).catch(()=>{});
   const draw = () => {
-    view(`<div class="wrap"><div class="brand">Mode propriétaire</div><h1>Créer la référence d'une chambre</h1>
+    view(`<div class="wrap">${logoBar()}<div class="brand">Mode propriétaire</div><h1>Créer la référence d'une chambre</h1>
+    <div class="tip">Plus rapide : <code>python tools/drive_to_pack.py "BP2 CH4"</code> fabrique ce fichier directement depuis le Drive BP (photos HEIC comprises).</div>
     <p class="sub">Choisissez les photos globales du précédent état des lieux (dans l'ordre de prise de vue), donnez-leur un nom, puis téléchargez le fichier <b>.json</b> à déposer dans le dossier <code>rooms/</code> du site.</p>
     <div class="card">
      <label class="f">Identifiant (dans le lien)</label><input type="text" data-a="id" value="${esc(A.id)}" placeholder="ex. bp3-ch2-k7f4">
@@ -677,7 +936,11 @@ async function renderAdmin(){
      <label class="f">Contact : nom / WhatsApp / e-mail</label>
      <input type="text" data-a="nom" value="${esc(A.nom)}" placeholder="Nom"><div style="height:6px"></div>
      <input type="text" data-a="whatsapp" value="${esc(A.whatsapp)}" placeholder="+33 6 …"><div style="height:6px"></div>
-     <input type="text" data-a="email" value="${esc(A.email)}" placeholder="e-mail"></div>
+     <input type="text" data-a="email" value="${esc(A.email)}" placeholder="e-mail">
+     <label class="f">Type d'état des lieux</label><select data-a="mode"><option value="entree" ${A.mode==="entree"?"selected":""}>Entrée</option><option value="sortie" ${A.mode==="sortie"?"selected":""}>Sortie (avec propreté)</option></select>
+     <label class="f">Rentila : n° de bail / n° de bien (facultatif)</label>
+     <input type="text" data-a="lease" value="${esc(A.lease)}" placeholder="ID du bail (ex. 1780351)" inputmode="numeric"><div style="height:6px"></div>
+     <input type="text" data-a="property" value="${esc(A.property)}" placeholder="ID du bien (ex. 824575)" inputmode="numeric"></div>
     <h2 style="margin-top:20px">Photos de référence (${A.photos.length})</h2>
     <div class="pairs">${A.photos.map((ph,i) => `<div class="pair"><div style="display:grid;grid-template-columns:80px 1fr;gap:10px;align-items:start"><img src="${ph.src}" style="aspect-ratio:auto;height:100px;object-fit:cover">
       <div><input type="text" data-l="${i}" value="${esc(ph.label)}" style="padding:9px 10px;font-size:15px"><input type="text" data-h="${i}" value="${esc(ph.hint||"")}" placeholder="Conseil (facultatif)" style="padding:9px 10px;font-size:14px;margin-top:6px">
@@ -685,6 +948,8 @@ async function renderAdmin(){
     <label class="btn sec" style="margin-top:12px">＋ Ajouter des photos<input type="file" accept="image/*" multiple id="af" hidden></label>
     <h2 style="margin-top:22px">Équipements à vérifier</h2><p class="sub" style="font-size:14px">Un par ligne. « * » devant = obligatoire. « | » sépare le conseil.</p>
     <textarea id="eqt" style="min-height:180px;font-size:14px">${esc(A.equip)}</textarea>
+    <h2 style="margin-top:22px">Propreté (sortie)</h2><p class="sub" style="font-size:14px">Un par ligne : « * » obligatoire · libellé | conseil | mots-clés IA (anglais, séparés par |).</p>
+    <textarea id="clt" style="min-height:180px;font-size:13px">${esc(A.clean)}</textarea>
     <div class="err" id="er"></div></div>
     <div class="bar"><div class="in"><button class="btn sec" id="ts" style="flex:1">Tester</button><button class="btn" id="dl" style="flex:2">Télécharger le .json</button></div></div>`);
     app.querySelectorAll("[data-a]").forEach(i => i.oninput = () => { A[i.dataset.a] = i.value; saveA(); });
@@ -695,11 +960,14 @@ async function renderAdmin(){
     app.querySelectorAll("[data-dn]").forEach(b => b.onclick = () => mv(+b.dataset.dn,1));
     app.querySelectorAll("[data-rm]").forEach(b => b.onclick = () => { A.photos.splice(+b.dataset.rm,1); saveA(); draw(); });
     $("#eqt").oninput = () => { A.equip = $("#eqt").value; saveA(); };
+    $("#clt").oninput = () => { A.clean = $("#clt").value; saveA(); };
     $("#af").onchange = async ev => { const fs = [...ev.target.files]; toast("Import de " + fs.length + " photo(s)…");
       for(const f of fs){ const b = await fileToJpeg(f, 1200, .8); const n = A.photos.length; A.photos.push({ src: await blobToDataURL(b), label: (DEFAULT_SHOTS[n]||["Photo "+(n+1)])[0], hint: (DEFAULT_SHOTS[n]||[,""])[1] }); }
       await saveA(); draw(); };
     const build = () => { if(!A.id.trim() || !A.chambre.trim()) { $("#er").textContent = "Renseignez au moins l'identifiant et la chambre."; return null; }
-      return { id: slug(A.id), logement: A.logement, chambre: A.chambre, adresse: A.adresse, proprietaire: A.proprietaire, contact: { nom:A.nom, whatsapp:A.whatsapp, email:A.email },
+      return { id: slug(A.id), mode: A.mode, logement: A.logement, chambre: A.chambre, adresse: A.adresse, proprietaire: A.proprietaire, contact: { nom:A.nom, whatsapp:A.whatsapp, email:A.email },
+        rentila: { lease_id: +A.lease || null, property_id: +A.property || null },
+        proprete: A.clean.split("\n").map(l => l.trim()).filter(Boolean).map(l => { const req = l.startsWith("*"); const [lb, h, ...ai] = l.replace(/^\*\s*/,"").split("|").map(x => x.trim()); return { label: lb, hint: h || "", required: req, ai: ai.join("|") }; }),
         refs: A.photos.map((ph,i) => ({ id: "p" + String(i+1).padStart(2,"0"), label: ph.label, hint: ph.hint, src: ph.src })),
         equipements: A.equip.split("\n").map(l => l.trim()).filter(Boolean).map(l => { const req = l.startsWith("*"); const [lb, h] = l.replace(/^\*\s*/,"").split("|").map(x => x.trim()); return { label: lb, hint: h || "", required: req }; }) }; };
     $("#dl").onclick = () => { const pk = build(); if(!pk) return; const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([JSON.stringify(pk)], {type:"application/json"})); a.download = pk.id + ".json"; a.click();

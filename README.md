@@ -1,7 +1,46 @@
-# État des lieux autonome — mode d'emploi
+# État des lieux autonome BP Immo — mode d'emploi
 
 Web app en **un seul fichier** (`index.html`), sans serveur ni abonnement.
 Tout se passe sur le téléphone du locataire, qui vous envoie à la fin un **rapport PDF** et un **ZIP de photos**.
+
+## Nouveautés (nov. 2026)
+
+### Charte BP Immo
+Logo proposé par Olivier (`assets/logo.png`, `mark.png`, icônes d'écran d'accueil), noir + or sur fond ivoire,
+titres en Cormorant Garamond. Le PDF porte le logo en en-tête.
+
+### Intelligence embarquée (tout se passe sur le téléphone)
+Chaque photo est vérifiée juste après la prise :
+- **netteté** (variance du laplacien, comparée à la photo de référence) et **exposition** (trop sombre / contre-jour) ;
+- **bon endroit** : corrélation des contours + similarité MobileNet avec la photo de référence ;
+- **bon objet** (propreté) : MobileNet reconnaît four, évier, lavabo, toilettes, douche… (mots-clés modifiables).
+En cas de doute : écran « Refaire / Garder quand même ». Rien n'est bloquant ; le verdict est écrit dans le PDF,
+`donnees.json` et les observations Rentila. Sans réseau, le modèle ne se charge pas et seuls netteté/exposition/contours s'appliquent.
+
+### État des lieux de sortie + propreté
+Lien `…/edl/?room=<id>&sortie` (ou `"mode": "sortie"` dans le pack).
+Étape **Propreté** : four, micro-ondes, plaques, hotte, frigo, lave-vaisselle, évier, toilettes, lavabo, douche,
+sol, placard, poubelles — photo + « Propre / À reprendre » + commentaire, nombre de clés rendues.
+Liste modifiable dans `?admin` ou dans le pack (`proprete`). Les photos de propreté d'une sortie deviennent la
+référence « à l'entrée » du locataire suivant.
+
+### Photos de référence depuis le Drive BP
+```
+python tools/drive_to_pack.py "BP2 CH4"                       # dernier dossier « EDL … », HEIC compris
+python tools/drive_to_pack.py "BP2 CH4" --mode sortie --lease 1796387 --max 15
+```
+Lit `H:\My Drive\BP<n> CH<m>\EDL <Prénom>\`, convertit (ffmpeg pour les HEIC), réduit à 1200 px et écrit
+`rooms/<id>.json`. Les vues s'appellent « Vue 1… » : renommez-les dans le .json si besoin.
+
+### Import dans Rentila et signature officielle
+Le ZIP du locataire contient `rentila.json` (corps `create_handover` : pièces, équipements avec état d'usure,
+propreté, clés, observations, contrôle auto).
+1. `python tools/zip_to_rentila.py <ZIP>` → `rentila_create.json` + `rentila_photos.json` ;
+2. demander à Claude « importe l'EDL de X dans Rentila » (skill `edl-rentila`) : brouillon créé via l'API Rentila,
+   photos déposées pièce par pièce dans le formulaire Rentila ;
+3. **vous** lancez la signature dans Rentila (onglet Signature : votre signature + code SMS) — l'API Rentila
+   ne permet pas encore de la démarrer. Le locataire reçoit l'invitation par e-mail/SMS.
+
 
 ## 1. Mettre en ligne (une fois, ~10 min, gratuit)
 La caméra ne marche qu'en **HTTPS** → GitHub Pages (ou Netlify Drop).
