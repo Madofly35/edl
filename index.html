@@ -392,6 +392,8 @@ async function startWith(raw){
   S.sessKey = key;
   S.sess = (await idb.get(key).catch(()=>null)) || { v:2, packId:S.pack.id, mode:S.pack.mode, tenant:"", startedAt:Date.now(), shots:{}, details:[], equip:{}, clean:{}, keys:"", comment:"", signature:null, accepted:false };
   S.sess.clean = S.sess.clean || {};
+  // Nom prérempli par l'appli Gestion BP Immo : lien …?room=<id>#nom=Prénom%20Nom (après « # », jamais envoyé au serveur)
+  try { const nomLien = new URLSearchParams(location.hash.slice(1)).get("nom"); if (nomLien && !S.sess.tenant) S.sess.tenant = nomLien.trim().slice(0, 80); } catch (e) {}
   setTimeout(() => AI.load(), 1500);   // préchargement discret du modèle
   renderHome();
 }
